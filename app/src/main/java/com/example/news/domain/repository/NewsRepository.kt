@@ -1,6 +1,8 @@
 package com.example.news.domain.repository
 
+import com.example.news.domain.model.NewsDomainModel
+
 interface NewsRepository {
-    fun fetchNews()
-    fun loadNews()
+    suspend fun fetchNews(): List<NewsDomainModel>
+    suspend fun loadNews(): List<NewsDomainModel>
 }

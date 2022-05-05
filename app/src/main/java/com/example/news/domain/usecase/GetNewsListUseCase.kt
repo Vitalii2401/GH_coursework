@@ -1,12 +1,18 @@
 package com.example.news.domain.usecase
 
-class GetNewsListUseCase {
+import com.example.news.domain.model.NewsDomainModel
+import com.example.news.domain.repository.NewsRepository
 
-    fun execute() {
+class GetNewsListUseCase(
+    private val newsRepository: NewsRepository
+) {
+
+    suspend fun execute(): List<NewsDomainModel> {
         loadNews()
+        return newsRepository.fetchNews()
     }
 
-    private fun loadNews() {
-
+    private suspend fun loadNews() {
+        newsRepository.loadNews()
     }
 }

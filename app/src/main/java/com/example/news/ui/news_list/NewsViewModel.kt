@@ -1,19 +1,27 @@
 package com.example.news.ui.news_list
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.news.data.api.NewsResponse
+import androidx.lifecycle.viewModelScope
+import com.example.news.domain.model.NewsDomainModel
+import com.example.news.domain.usecase.GetNewsListUseCase
+import kotlinx.coroutines.launch
 
-class NewsViewModel : ViewModel() {
+class NewsViewModel(
+    private val getNewsListUseCase: GetNewsListUseCase
+) : ViewModel() {
 
     init {
         loadNews()
     }
 
-    private val _newsList = MutableLiveData<List<NewsResponse>>()
-    val newsList = _newsList
+    private val _newsList = MutableLiveData<List<NewsDomainModel>>()
+    val newsList: LiveData<List<NewsDomainModel>> = _newsList
 
     private fun loadNews() {
-
+        viewModelScope.launch {
+            _newsList.value = getNewsListUseCase.execute()
+        }
     }
 }
