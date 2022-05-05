@@ -11,7 +11,7 @@ data class NewsResponse(
 data class ArticlesResponse(
     @SerializedName("source"      ) var source      : SourceResponse? = SourceResponse(),
     @SerializedName("author"      ) var author      : String? = null,
-    @SerializedName("title"       ) var title       : String? = null,
+    @SerializedName("title"       ) var title       : String,
     @SerializedName("description" ) var description : String? = null,
     @SerializedName("url"         ) var url         : String? = null,
     @SerializedName("urlToImage"  ) var urlToImage  : String? = null,
