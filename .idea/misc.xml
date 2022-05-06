@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/activity_main.xml" value="0.23007246376811594" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/fragment_news_detail.xml" value="0.23007246376811594" />
         <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/fragment_news_list.xml" value="0.21557971014492755" />
         <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/news_list_item.xml" value="0.264" />
       </map>
