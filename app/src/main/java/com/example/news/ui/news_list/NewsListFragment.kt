@@ -7,13 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.news.R
 import com.example.news.databinding.FragmentNewsListBinding
+import com.example.news.ui.MainActivity
+import com.example.news.ui.news_detail.NewsDetailFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NewsListFragment : Fragment() {
+class NewsListFragment : Fragment(), NewsAdapter.OnItemClickListener {
 
     private lateinit var binding: FragmentNewsListBinding
-    private val adapter = NewsAdapter()
+    private val adapter = NewsAdapter(this)
     private val newsViewModel by viewModel<NewsViewModel>()
 
     override fun onCreateView(
@@ -56,5 +59,14 @@ class NewsListFragment : Fragment() {
 
         @JvmStatic
         fun newInstance() = NewsListFragment()
+    }
+
+    override fun onItemClick(url: String) {
+        val fragmentDetail = NewsDetailFragment.newInstance(url)
+        activity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.replace(R.id.newsFrameLayout, fragmentDetail)
+            ?.addToBackStack(fragmentDetail.javaClass.name)
+            ?.commit()
     }
 }
