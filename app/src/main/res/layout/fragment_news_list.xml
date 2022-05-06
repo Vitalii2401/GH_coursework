@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.news_list.NewsListFragment"
-    android:id="@+id/swipeRefreshLayout">
+    android:id="@+id/swipeRefreshLayout"
+    android:background="@color/background">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/newsRecyclerView"
