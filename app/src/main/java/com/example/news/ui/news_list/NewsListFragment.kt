@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.news.databinding.FragmentNewsListBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsListFragment : Fragment() {
 
     private lateinit var binding: FragmentNewsListBinding
     private val adapter = NewsAdapter()
+    private val newsViewModel by viewModel<NewsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +30,7 @@ class NewsListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecycler()
+        showNews()
     }
 
     private fun initRecycler() {
@@ -36,6 +39,17 @@ class NewsListFragment : Fragment() {
                 binding.newsRecyclerView.context, RecyclerView.VERTICAL, false
             )
         binding.newsRecyclerView.adapter = adapter
+    }
+
+    private fun showNews() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            newsViewModel.loadNews()
+        }
+
+        newsViewModel.newsList.observe(viewLifecycleOwner) {
+            binding.swipeRefreshLayout.isRefreshing = false
+            adapter.addData(it)
+        }
     }
 
     companion object {
