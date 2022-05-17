@@ -8,11 +8,7 @@ class GetNewsListUseCase(
 ) {
 
     suspend fun execute(): List<NewsDomainModel> {
-        loadNews()
-        return newsRepository.fetchNews()
-    }
-
-    private suspend fun loadNews() {
         newsRepository.loadNews()
+        return newsRepository.fetchNews()
     }
 }

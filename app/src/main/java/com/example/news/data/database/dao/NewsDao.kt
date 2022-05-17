@@ -13,4 +13,7 @@ abstract class NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun addNews(news: List<NewsEntity>)
+
+    @Query("DELETE FROM news")
+    abstract suspend fun deleteNews()
 }

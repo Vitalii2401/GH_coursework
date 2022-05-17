@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.news.R
 import com.example.news.databinding.FragmentNewsListBinding
-import com.example.news.ui.MainActivity
 import com.example.news.ui.news_detail.NewsDetailFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -53,12 +52,6 @@ class NewsListFragment : Fragment(), NewsAdapter.OnItemClickListener {
             binding.swipeRefreshLayout.isRefreshing = false
             adapter.addData(it)
         }
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance() = NewsListFragment()
     }
 
     override fun onItemClick(url: String) {

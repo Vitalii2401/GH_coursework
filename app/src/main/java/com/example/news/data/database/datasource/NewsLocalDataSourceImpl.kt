@@ -16,4 +16,8 @@ class NewsLocalDataSourceImpl(
     override suspend fun addNews(news: List<NewsDomainModel>) {
         newsDao.addNews(news.map(::mapNewsDomainModelToEntity))
     }
+
+    override suspend fun deleteNews() {
+        newsDao.deleteNews()
+    }
 }
