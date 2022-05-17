@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.news_list.NewsListFragment"
-    android:id="@+id/swipeRefreshLayout"
-    android:background="@color/background">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".ui.news_list.NewsListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/newsRecyclerView"
+        android:id="@+id/newsCategoryRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/color_primary_variant"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/categories_list_item"/>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/news_list_item"/>
+        android:id="@+id/swipeRefreshLayout"
+        android:background="@color/background">
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/newsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/news_list_item"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>
