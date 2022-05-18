@@ -3,9 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/drawable/ic_business.xml" value="0.2755" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/drawable/ic_entertainment.xml" value="0.2755" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/drawable/ic_general.xml" value="0.2755" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2755" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/drawable/ic_science.xml" value="0.2755" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/drawable/ic_sports.xml" value="0.2755" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/drawable/ic_technology.xml" value="0.2755" />
         <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/activity_main.xml" value="0.23007246376811594" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/categories_list_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/fragment_news_detail.xml" value="0.23007246376811594" />
-        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/fragment_news_list.xml" value="0.21557971014492755" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/fragment_news_list.xml" value="0.264" />
         <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/news_list_item.xml" value="0.264" />
       </map>
     </option>

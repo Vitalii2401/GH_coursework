@@ -15,7 +15,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class NewsListFragment : Fragment(), NewsAdapter.OnItemClickListener {
 
     private lateinit var binding: FragmentNewsListBinding
-    private val adapter = NewsAdapter(this)
+    private val adapterNews = NewsAdapter(this)
+    private val adapterCategories = NewsCategoriesAdapter()
     private val newsViewModel by viewModel<NewsViewModel>()
 
     override fun onCreateView(
@@ -40,7 +41,8 @@ class NewsListFragment : Fragment(), NewsAdapter.OnItemClickListener {
             LinearLayoutManager(
                 binding.newsRecyclerView.context, RecyclerView.VERTICAL, false
             )
-        binding.newsRecyclerView.adapter = adapter
+        binding.newsRecyclerView.adapter = adapterNews
+        binding.newsCategoryRecycler.adapter = adapterCategories
     }
 
     private fun showNews() {
@@ -48,9 +50,13 @@ class NewsListFragment : Fragment(), NewsAdapter.OnItemClickListener {
             newsViewModel.loadNews()
         }
 
+        newsViewModel.categoriesList.observe(viewLifecycleOwner) {
+            adapterCategories.addData(it)
+        }
+
         newsViewModel.newsList.observe(viewLifecycleOwner) {
             binding.swipeRefreshLayout.isRefreshing = false
-            adapter.addData(it)
+            adapterNews.addData(it)
         }
     }
 
