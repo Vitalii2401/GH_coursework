@@ -9,7 +9,6 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/newsFrameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="com.example.news.ui.news_list.NewsListFragment"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>
