@@ -16,6 +16,7 @@ class NewsRepositoryImpl(
     override suspend fun loadNews() {
         newsRemoteDataSource.loadNews().let {
             if (it.isNotEmpty()) {
+                newsLocalDataSource.deleteNews()
                 newsLocalDataSource.addNews(it)
             }
         }
