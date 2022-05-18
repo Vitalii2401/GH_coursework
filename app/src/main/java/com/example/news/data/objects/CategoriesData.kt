@@ -1,7 +1,8 @@
-package com.example.news.data.categories
+package com.example.news.data.objects
 
 import com.example.news.NewsApp
 import com.example.news.R
+import com.example.news.data.objects.model.NewsCategory
 
 object CategoriesData {
     val categoriesList = listOf<NewsCategory>(

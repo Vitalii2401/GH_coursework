@@ -1,4 +1,4 @@
-package com.example.news.data.categories
+package com.example.news.data.objects.model
 
 import androidx.annotation.DrawableRes
 

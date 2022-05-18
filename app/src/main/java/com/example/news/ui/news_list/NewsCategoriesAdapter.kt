@@ -1,13 +1,15 @@
 package com.example.news.ui.news_list
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.news.data.categories.NewsCategory
+import com.example.news.data.objects.model.NewsCategory
 import com.example.news.databinding.CategoriesListItemBinding
 
-class NewsCategoriesAdapter :
-    RecyclerView.Adapter<NewsCategoriesAdapter.NewsCategoriesViewHolder>() {
+class NewsCategoriesAdapter(
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<NewsCategoriesAdapter.NewsCategoriesViewHolder>() {
 
     private lateinit var binding: CategoriesListItemBinding
     private var newsCategoriesList = listOf<NewsCategory>()
@@ -29,12 +31,25 @@ class NewsCategoriesAdapter :
         notifyDataSetChanged()
     }
 
-    class NewsCategoriesViewHolder(private val binding: CategoriesListItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class NewsCategoriesViewHolder(private val binding: CategoriesListItemBinding) :
+        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         fun bind(current: NewsCategory) {
             binding.iconCategory.setImageResource(current.icon)
             binding.nameCategory.text = current.name
         }
+
+        override fun onClick(p0: View?) {
+            val category = newsCategoriesList[adapterPosition].name
+            listener.onItemCategoryClick(category)
+        }
+    }
+
+    interface OnItemClickListener {
+        fun onItemCategoryClick(category: String)
     }
 }

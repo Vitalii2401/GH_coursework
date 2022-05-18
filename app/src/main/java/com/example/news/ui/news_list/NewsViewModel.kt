@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.news.data.categories.CategoriesData
-import com.example.news.data.categories.NewsCategory
+import com.example.news.data.objects.CategoriesData
+import com.example.news.data.objects.model.NewsCategory
 import com.example.news.domain.model.NewsDomainModel
 import com.example.news.domain.usecase.GetNewsListUseCase
 import kotlinx.coroutines.launch
