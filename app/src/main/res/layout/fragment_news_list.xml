@@ -14,7 +14,7 @@
         android:background="@color/color_primary_variant"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/categories_list_item"/>
+        tools:listitem="@layout/categories_list_item" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
@@ -23,10 +23,12 @@
         android:background="@color/background">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/newsRecyclerView"
+            android:id="@+id/newsRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/news_list_item"/>
+            tools:listitem="@layout/news_list_item"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

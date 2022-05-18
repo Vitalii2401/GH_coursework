@@ -37,11 +37,7 @@ class NewsListFragment : Fragment(),
     }
 
     private fun initRecycler() {
-        binding.newsRecyclerView.layoutManager =
-            LinearLayoutManager(
-                binding.newsRecyclerView.context, RecyclerView.VERTICAL, false
-            )
-        binding.newsRecyclerView.adapter = adapterNews
+        binding.newsRecycler.adapter = adapterNews
         binding.newsCategoryRecycler.adapter = adapterCategories
     }
 
