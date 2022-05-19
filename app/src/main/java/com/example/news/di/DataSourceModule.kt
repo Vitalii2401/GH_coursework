@@ -7,7 +7,7 @@ import org.koin.dsl.module
 
 val dataSourceModule = module {
     single<NewsDataSource.Remote> {
-        NewsRemoteDataSourceImpl(newsApi = get())
+        NewsRemoteDataSourceImpl(newsApi = get(), context = get())
     }
 
     single<NewsDataSource.Local> {

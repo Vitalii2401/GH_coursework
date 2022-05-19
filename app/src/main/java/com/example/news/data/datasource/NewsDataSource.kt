@@ -7,6 +7,7 @@ interface NewsDataSource {
     interface Local {
         suspend fun fetchNews(): List<NewsDomainModel>
         suspend fun addNews(news: List<NewsDomainModel>)
+        suspend fun deleteNews()
     }
 
     interface Remote {

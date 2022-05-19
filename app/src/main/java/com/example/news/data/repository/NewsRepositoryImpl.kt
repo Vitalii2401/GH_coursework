@@ -13,9 +13,12 @@ class NewsRepositoryImpl(
         return newsLocalDataSource.fetchNews()
     }
 
-    override suspend fun loadNews(): List<NewsDomainModel> {
-        return newsRemoteDataSource.loadNews().also { news ->
-            newsLocalDataSource.addNews(news)
+    override suspend fun loadNews() {
+        newsRemoteDataSource.loadNews().let {
+            if (it.isNotEmpty()) {
+                newsLocalDataSource.deleteNews()
+                newsLocalDataSource.addNews(it)
+            }
         }
     }
 }

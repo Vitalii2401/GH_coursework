@@ -8,24 +8,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.news.R
+import com.example.news.data.objects.RequestParam
 import com.example.news.databinding.FragmentNewsListBinding
-import com.example.news.ui.MainActivity
 import com.example.news.ui.news_detail.NewsDetailFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NewsListFragment : Fragment(), NewsAdapter.OnItemClickListener {
+class NewsListFragment : Fragment(),
+    NewsAdapter.OnItemClickListener,
+    NewsCategoriesAdapter.OnItemClickListener{
 
     private lateinit var binding: FragmentNewsListBinding
-    private val adapter = NewsAdapter(this)
+    private val adapterNews = NewsAdapter(this)
+    private val adapterCategories = NewsCategoriesAdapter(this)
     private val newsViewModel by viewModel<NewsViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentNewsListBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -37,11 +37,8 @@ class NewsListFragment : Fragment(), NewsAdapter.OnItemClickListener {
     }
 
     private fun initRecycler() {
-        binding.newsRecyclerView.layoutManager =
-            LinearLayoutManager(
-                binding.newsRecyclerView.context, RecyclerView.VERTICAL, false
-            )
-        binding.newsRecyclerView.adapter = adapter
+        binding.newsRecycler.adapter = adapterNews
+        binding.newsCategoryRecycler.adapter = adapterCategories
     }
 
     private fun showNews() {
@@ -49,24 +46,28 @@ class NewsListFragment : Fragment(), NewsAdapter.OnItemClickListener {
             newsViewModel.loadNews()
         }
 
+        newsViewModel.categoriesList.observe(viewLifecycleOwner) {
+            adapterCategories.addData(it)
+        }
+
         newsViewModel.newsList.observe(viewLifecycleOwner) {
             binding.swipeRefreshLayout.isRefreshing = false
-            adapter.addData(it)
+            adapterNews.addData(it)
         }
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance() = NewsListFragment()
-    }
-
-    override fun onItemClick(url: String) {
+    override fun onItemNewsClick(url: String) {
         val fragmentDetail = NewsDetailFragment.newInstance(url)
         activity?.supportFragmentManager
             ?.beginTransaction()
             ?.replace(R.id.newsFrameLayout, fragmentDetail)
             ?.addToBackStack(fragmentDetail.javaClass.name)
             ?.commit()
+    }
+
+    override fun onItemCategoryClick(category: String) {
+        RequestParam.CATEGORY = category
+        binding.swipeRefreshLayout.isRefreshing = true
+        newsViewModel.loadNews()
     }
 }

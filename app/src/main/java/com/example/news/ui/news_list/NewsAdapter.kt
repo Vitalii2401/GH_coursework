@@ -47,7 +47,7 @@ class NewsAdapter(
 
         override fun onClick(p0: View?) {
             val url = newsList[adapterPosition].url
-            url?.let { listener.onItemClick(it) }
+            url?.let { listener.onItemNewsClick(it) }
         }
     }
 
@@ -57,6 +57,6 @@ class NewsAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(url: String)
+        fun onItemNewsClick(url: String)
     }
 }

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
-import com.example.news.R
 import com.example.news.databinding.FragmentNewsDetailBinding
 
 private const val URL = "url"
