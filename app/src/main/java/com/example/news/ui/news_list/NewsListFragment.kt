@@ -5,8 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.core.app.ShareCompat
 import com.example.news.R
 import com.example.news.data.objects.RequestParam
 import com.example.news.databinding.FragmentNewsListBinding
@@ -15,7 +14,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsListFragment : Fragment(),
     NewsAdapter.OnItemClickListener,
-    NewsCategoriesAdapter.OnItemClickListener{
+    NewsCategoriesAdapter.OnItemClickListener {
 
     private lateinit var binding: FragmentNewsListBinding
     private val adapterNews = NewsAdapter(this)
@@ -58,11 +57,19 @@ class NewsListFragment : Fragment(),
 
     override fun onItemNewsClick(url: String) {
         val fragmentDetail = NewsDetailFragment.newInstance(url)
-        activity?.supportFragmentManager
-            ?.beginTransaction()
-            ?.replace(R.id.newsFrameLayout, fragmentDetail)
-            ?.addToBackStack(fragmentDetail.javaClass.name)
-            ?.commit()
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.newsFrameLayout, fragmentDetail)
+            .addToBackStack(fragmentDetail.javaClass.name)
+            .commit()
+    }
+
+    override fun onImageShareClick(url: String) {
+        ShareCompat.IntentBuilder(requireContext())
+            .setType("text/plain")
+            .setChooserTitle(R.string.share_url)
+            .setText(url)
+            .startChooser()
     }
 
     override fun onItemCategoryClick(category: String) {

@@ -1,7 +1,6 @@
 package com.example.news.ui.news_list
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.news.data.objects.model.NewsCategory
@@ -22,30 +21,25 @@ class NewsCategoriesAdapter(
 
     override fun onBindViewHolder(holder: NewsCategoriesViewHolder, position: Int) {
         holder.bind(newsCategoriesList[position])
+
+        holder.itemView.setOnClickListener {
+            listener.onItemCategoryClick(newsCategoriesList[position].name)
+        }
     }
 
     override fun getItemCount(): Int = newsCategoriesList.size
 
-    fun addData(list: List<NewsCategory>){
+    fun addData(list: List<NewsCategory>) {
         newsCategoriesList = list
         notifyDataSetChanged()
     }
 
-    inner class NewsCategoriesViewHolder(private val binding: CategoriesListItemBinding) :
-        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
-
-        init {
-            itemView.setOnClickListener(this)
-        }
+    class NewsCategoriesViewHolder(private val binding: CategoriesListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(current: NewsCategory) {
             binding.iconCategory.setImageResource(current.icon)
             binding.nameCategory.text = current.name
-        }
-
-        override fun onClick(p0: View?) {
-            val category = newsCategoriesList[adapterPosition].name
-            listener.onItemCategoryClick(category)
         }
     }
 
