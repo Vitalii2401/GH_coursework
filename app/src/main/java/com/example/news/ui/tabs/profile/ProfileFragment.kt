@@ -18,7 +18,6 @@ import com.google.firebase.ktx.app
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
-    private val firebaseUser = Firebase.auth.currentUser
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +47,7 @@ class ProfileFragment : Fragment() {
     private fun logOut() {
         binding.signOutButton.setOnClickListener {
             AuthUI.getInstance().signOut(requireContext()).addOnSuccessListener {
-                Log.d("Click logout", "logOut: true")
+                firebaseUser = Firebase.auth.currentUser
                 findNavController().navigate(R.id.signInFragment)
             }
         }

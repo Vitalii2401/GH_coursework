@@ -2,6 +2,7 @@ package com.example.news.ui.tabs.news_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -32,10 +33,14 @@ class NewsAdapter(
             }
         }
 
-        holder.itemView.findViewById<ImageView>(R.id.iconShare).setOnClickListener {
+        holder.itemView.findViewById<ImageButton>(R.id.iconShare).setOnClickListener {
             newsList[position].url?.let {
                 listener.onImageShareClick(it)
             }
+        }
+
+        holder.itemView.findViewById<ImageButton>(R.id.addBookmarkButton).setOnClickListener {
+            listener.onAddBookmarkClick(newsList[position])
         }
     }
 
@@ -61,5 +66,6 @@ class NewsAdapter(
     interface OnItemClickListener {
         fun onItemNewsClick(url: String)
         fun onImageShareClick(url: String)
+        fun onAddBookmarkClick(news: NewsDomainModel)
     }
 }
