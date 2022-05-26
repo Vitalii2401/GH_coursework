@@ -14,7 +14,7 @@ class BookmarksAdapter(
 ) : RecyclerView.Adapter<BookmarksAdapter.BookmarksViewHolder>() {
 
     private lateinit var binding: BookmarksListItemBinding
-    private var newsList = listOf<NewsDomainModel>()
+    private var newsList = listOf<BookmarksModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarksViewHolder {
         binding = BookmarksListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -33,11 +33,15 @@ class BookmarksAdapter(
             val url = newsList[position].url
             url?.let { listener.onShareImageClick(it) }
         }
+
+        holder.itemView.findViewById<ImageButton>(R.id.deleteButton).setOnClickListener {
+            listener.onItemDelete(newsList[position].id)
+        }
     }
 
     override fun getItemCount(): Int = newsList.size
 
-    fun addData(list: List<NewsDomainModel>){
+    fun addData(list: List<BookmarksModel>){
         newsList = list
         notifyDataSetChanged()
     }
@@ -46,7 +50,7 @@ class BookmarksAdapter(
     class BookmarksViewHolder(private val binding: BookmarksListItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(current: NewsDomainModel){
+        fun bind(current: BookmarksModel){
             binding.newsTitle.text = current.title
 
             Glide.with(binding.newsImage.context)
@@ -59,5 +63,6 @@ class BookmarksAdapter(
     interface OnItemClickListenerBookmarks {
         fun onItemNewsClick(url: String)
         fun onShareImageClick(url: String)
+        fun onItemDelete(bookmarksId: String)
     }
 }
