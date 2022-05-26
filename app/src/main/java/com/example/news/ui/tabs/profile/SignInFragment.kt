@@ -18,10 +18,12 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+var firebaseUser = Firebase.auth.currentUser
+
+
 class SignInFragment : Fragment() {
 
     private lateinit var binding: FragmentSignInBinding
-    var firebaseUser = Firebase.auth.currentUser
 
     private val signInLauncher =
         registerForActivityResult(FirebaseAuthUIActivityResultContract()) { res ->
