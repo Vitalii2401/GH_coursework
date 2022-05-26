@@ -13,9 +13,14 @@
         <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/drawable/ic_technology.xml" value="0.2755" />
         <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/activity_main.xml" value="0.23007246376811594" />
         <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/categories_list_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/fragment_bookmarks.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/fragment_news_detail.xml" value="0.23007246376811594" />
         <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/fragment_news_list.xml" value="0.264" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/fragment_sign_in.xml" value="0.25416666666666665" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/fragment_tabs.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/layout/news_list_item.xml" value="0.264" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/menu/tabs_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
