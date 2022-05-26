@@ -1,4 +1,4 @@
-package com.example.news.ui.news_list
+package com.example.news.ui.tabs.news_list
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

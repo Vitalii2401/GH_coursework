@@ -1,4 +1,4 @@
-package com.example.news.ui.news_list
+package com.example.news.ui.tabs.news_list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
