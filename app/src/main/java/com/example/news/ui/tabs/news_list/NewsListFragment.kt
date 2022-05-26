@@ -1,4 +1,4 @@
-package com.example.news.ui.news_list
+package com.example.news.ui.tabs.news_list
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ShareCompat
+import androidx.navigation.fragment.NavHostFragment
 import com.example.news.R
+import com.example.news.data.objects.CategoriesData
 import com.example.news.data.objects.RequestParam
 import com.example.news.databinding.FragmentNewsListBinding
 import com.example.news.ui.news_detail.NewsDetailFragment
+import com.example.news.ui.tabs.TabsFragmentDirections
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsListFragment : Fragment(),
@@ -56,12 +59,10 @@ class NewsListFragment : Fragment(),
     }
 
     override fun onItemNewsClick(url: String) {
-        val fragmentDetail = NewsDetailFragment.newInstance(url)
-        requireActivity().supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.newsFrameLayout, fragmentDetail)
-            .addToBackStack(fragmentDetail.javaClass.name)
-            .commit()
+        val topLevelHost = requireActivity().supportFragmentManager
+            .findFragmentById(R.id.fragmentContainer) as NavHostFragment
+
+       topLevelHost.navController.navigate(TabsFragmentDirections.actionTabsFragmentToNewsDetailFragment(url))
     }
 
     override fun onImageShareClick(url: String) {
@@ -76,5 +77,6 @@ class NewsListFragment : Fragment(),
         RequestParam.CATEGORY = category
         binding.swipeRefreshLayout.isRefreshing = true
         newsViewModel.loadNews()
+        binding.newsRecycler.layoutManager?.scrollToPosition(0)
     }
 }
