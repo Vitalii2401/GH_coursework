@@ -13,4 +13,10 @@ interface NewsDataSource {
     interface Remote {
         suspend fun loadNews(): List<NewsDomainModel>
     }
+
+    interface Firebase {
+        suspend fun saveNews(news: NewsDomainModel)
+        suspend fun deleteNews(news: NewsDomainModel)
+        suspend fun getListNews(): List<NewsDomainModel>
+    }
 }
