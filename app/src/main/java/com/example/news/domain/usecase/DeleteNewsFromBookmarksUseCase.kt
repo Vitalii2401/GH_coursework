@@ -2,7 +2,7 @@ package com.example.news.domain.usecase
 
 import com.example.news.domain.repository.NewsRepository
 
-class DeleteNewsFromBookmarks(
+class DeleteNewsFromBookmarksUseCase(
     private val newsRepository: NewsRepository
 ) {
     suspend fun execute(id: String) {
