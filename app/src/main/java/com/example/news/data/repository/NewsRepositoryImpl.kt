@@ -3,10 +3,12 @@ package com.example.news.data.repository
 import com.example.news.data.datasource.NewsDataSource
 import com.example.news.domain.model.NewsDomainModel
 import com.example.news.domain.repository.NewsRepository
+import com.example.news.ui.tabs.bookmarks.BookmarksModel
 
 class NewsRepositoryImpl(
     private val newsRemoteDataSource: NewsDataSource.Remote,
-    private val newsLocalDataSource: NewsDataSource.Local
+    private val newsLocalDataSource: NewsDataSource.Local,
+    private val firebaseDataSource: NewsDataSource.Firebase
 ) : NewsRepository {
 
     override suspend fun fetchNews(): List<NewsDomainModel> {
@@ -20,5 +22,17 @@ class NewsRepositoryImpl(
                 newsLocalDataSource.addNews(it)
             }
         }
+    }
+
+    override suspend fun addNewsToBookmarks(news: NewsDomainModel): String {
+        return firebaseDataSource.saveNews(news)
+    }
+
+    override suspend fun getListBookmarks(): List<BookmarksModel> {
+        return firebaseDataSource.getListNews()
+    }
+
+    override suspend fun deleteNewsFromBookmarks(id: String) {
+        firebaseDataSource.deleteNews(id)
     }
 }
