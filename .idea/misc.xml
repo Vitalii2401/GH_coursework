@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2225" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2225" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2225" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_launcher_news.xml" value="0.189" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_launcher_news_background.xml" value="0.189" />
         <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/drawable/ic_business.xml" value="0.2755" />
         <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/drawable/ic_entertainment.xml" value="0.2755" />
         <entry key="..\:/Projects/Android_Studio_Projects/GeekHub/News/app/src/main/res/drawable/ic_general.xml" value="0.2755" />
