@@ -84,7 +84,7 @@ class NewsListFragment : Fragment(),
 
     override fun onAddBookmarkClick(news: NewsDomainModel) {
 
-        val myRef = firebaseUser?.uid?.let {
+/*        val myRef = firebaseUser?.uid?.let {
             database.reference.child("users").child(it).child("bookmarksNews")
         }
 
@@ -97,7 +97,7 @@ class NewsListFragment : Fragment(),
                 ?.addOnSuccessListener {
                     Toast.makeText(requireContext(), "News add to bookmark", Toast.LENGTH_SHORT).show()
                 }
-        }
+        }*/
     }
 
     override fun onItemCategoryClick(category: String) {

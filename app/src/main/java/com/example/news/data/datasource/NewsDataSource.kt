@@ -1,6 +1,7 @@
 package com.example.news.data.datasource
 
 import com.example.news.domain.model.NewsDomainModel
+import com.example.news.ui.tabs.bookmarks.BookmarksModel
 
 interface NewsDataSource {
 
@@ -15,8 +16,8 @@ interface NewsDataSource {
     }
 
     interface Firebase {
-        suspend fun saveNews(news: NewsDomainModel)
-        suspend fun deleteNews(news: NewsDomainModel)
-        suspend fun getListNews(): List<NewsDomainModel>
+        suspend fun saveNews(news: NewsDomainModel): String
+        suspend fun deleteNews(id: String)
+        suspend fun getListNews(): List<BookmarksModel>
     }
 }

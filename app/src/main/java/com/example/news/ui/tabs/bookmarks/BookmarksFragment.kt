@@ -87,12 +87,12 @@ class BookmarksFragment : Fragment(), BookmarksAdapter.OnItemClickListenerBookma
             .startChooser()
     }
 
-    override fun onItemDelete(bookmarkId: String) {
-        val bookmarksRef = firebaseUser?.uid?.let {
+    override fun onItemDelete(bookmarksId: String) {
+        /*val bookmarksRef = firebaseUser?.uid?.let {
             databaseRef.child("users").child(it).child("bookmarksNews").child(bookmarkId)
         }
         bookmarksRef?.removeValue()?.addOnSuccessListener {
             Toast.makeText(requireContext(), "News delete", Toast.LENGTH_SHORT).show()
-        }
+        }*/
     }
 }
