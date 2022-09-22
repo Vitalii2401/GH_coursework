@@ -1,7 +1,6 @@
 package com.example.news.ui.tabs.profile
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,17 +12,14 @@ import com.example.news.databinding.FragmentSignInBinding
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-
-var firebaseUser = Firebase.auth.currentUser
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignInFragment : Fragment() {
 
     private lateinit var binding: FragmentSignInBinding
+    private val profileViewModel by viewModel<ProfileViewModel>()
 
     private val signInLauncher =
         registerForActivityResult(FirebaseAuthUIActivityResultContract()) { res ->
@@ -43,9 +39,7 @@ class SignInFragment : Fragment() {
 
         checkAuthState()
 
-        binding.signInButton.setOnClickListener {
-            showFirebaseUI()
-        }
+        binding.signInButton.setOnClickListener { showFirebaseUI() }
     }
 
     private fun showFirebaseUI() {
@@ -64,14 +58,16 @@ class SignInFragment : Fragment() {
 
     private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
         if (result.resultCode == ComponentActivity.RESULT_OK) {
-            firebaseUser = Firebase.auth.currentUser
+            profileViewModel.setUser(Firebase.auth.currentUser!!)
             checkAuthState()
         }
     }
 
     private fun checkAuthState() {
-        if (firebaseUser != null) {
-            findNavController().navigate(R.id.profileFragment)
+        profileViewModel.firebaseUser.observe(viewLifecycleOwner) { firebaseUser ->
+            if (firebaseUser != null) {
+                findNavController().navigate(R.id.profileFragment)
+            }
         }
     }
 }
