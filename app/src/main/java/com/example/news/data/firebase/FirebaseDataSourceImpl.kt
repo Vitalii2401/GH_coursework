@@ -67,6 +67,4 @@ class FirebaseDataSourceImpl(
         .child(it.uid)
         .child("bookmarksNews")
     }
-
-    }
 }

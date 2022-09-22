@@ -7,7 +7,10 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel {
-        NewsViewModel(getNewsListUseCase = get())
+        NewsViewModel(
+            getNewsListUseCase = get(),
+            addNewsToBookmarksUseCase = get()
+        )
         ProfileViewModel(
             getFirebaseUserUseCase = get(),
             setFirebaseUserUseCase = get()
