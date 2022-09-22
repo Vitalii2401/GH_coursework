@@ -8,7 +8,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class FirebaseDataSourceImpl(
-    private val firebaseUser: FirebaseUser,
+    private var firebaseUser: FirebaseUser,
     private val firebaseDatabase: FirebaseDatabase
 ) : NewsDataSource.Firebase {
 
@@ -51,6 +51,14 @@ class FirebaseDataSourceImpl(
         }
 
         return listNews
+    }
+
+    override suspend fun getUser(): FirebaseUser {
+        return firebaseUser
+    }
+
+    override suspend fun setUser(user: FirebaseUser) {
+        firebaseUser = user
     }
 
     private fun databaseReference() : DatabaseReference = firebaseUser.uid
