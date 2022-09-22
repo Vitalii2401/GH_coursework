@@ -33,11 +33,11 @@ class NewsRepositoryImpl(
         return firebaseDataSource.getListNews()
     }
 
-    override suspend fun getFirebaseUser(): FirebaseUser {
+    override suspend fun getFirebaseUser(): FirebaseUser? {
         return firebaseDataSource.getUser()
     }
 
-    override suspend fun setFirebaseUser(user: FirebaseUser) {
+    override suspend fun setFirebaseUser(user: FirebaseUser?) {
         firebaseDataSource.setUser(user)
     }
 

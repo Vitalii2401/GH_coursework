@@ -11,6 +11,6 @@ interface NewsRepository {
     suspend fun addNewsToBookmarks(news: NewsDomainModel): String
     suspend fun deleteNewsFromBookmarks(id: String)
     suspend fun getListBookmarks(): List<BookmarksModel>
-    suspend fun getFirebaseUser(): FirebaseUser
-    suspend fun setFirebaseUser(user: FirebaseUser)
+    suspend fun getFirebaseUser(): FirebaseUser?
+    suspend fun setFirebaseUser(user: FirebaseUser?)
 }

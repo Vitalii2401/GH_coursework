@@ -6,7 +6,7 @@ import com.google.firebase.auth.FirebaseUser
 class GetFirebaseUserUseCase(
     private val newsRepository: NewsRepository
 ) {
-    suspend fun execute(): FirebaseUser {
+    suspend fun execute(): FirebaseUser? {
         return newsRepository.getFirebaseUser()
     }
 }

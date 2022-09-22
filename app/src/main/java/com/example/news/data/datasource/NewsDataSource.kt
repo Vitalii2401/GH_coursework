@@ -20,7 +20,7 @@ interface NewsDataSource {
         suspend fun saveNews(news: NewsDomainModel): String
         suspend fun deleteNews(id: String)
         suspend fun getListNews(): List<BookmarksModel>
-        suspend fun getUser(): FirebaseUser
-        suspend fun setUser(user: FirebaseUser)
+        suspend fun getUser(): FirebaseUser?
+        suspend fun setUser(user: FirebaseUser?)
     }
 }

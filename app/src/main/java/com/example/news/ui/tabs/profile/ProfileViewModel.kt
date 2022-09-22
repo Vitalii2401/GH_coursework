@@ -14,14 +14,14 @@ class ProfileViewModel(
     private val setFirebaseUserUseCase: SetFirebaseUserUseCase
 ) : ViewModel() {
 
-    private val _firebaseUser = MutableLiveData<FirebaseUser>()
-    val firebaseUser: LiveData<FirebaseUser> = _firebaseUser
+    private val _firebaseUser = MutableLiveData<FirebaseUser?>()
+    val firebaseUser: LiveData<FirebaseUser?> = _firebaseUser
 
     init {
         getUser()
     }
 
-    fun getUser() {
+    private fun getUser() {
         viewModelScope.launch {
             _firebaseUser.value = getFirebaseUserUseCase.execute()
         }

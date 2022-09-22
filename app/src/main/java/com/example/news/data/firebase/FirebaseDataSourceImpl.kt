@@ -8,18 +8,18 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class FirebaseDataSourceImpl(
-    private var firebaseUser: FirebaseUser,
+    private var firebaseUser: FirebaseUser?,
     private val firebaseDatabase: FirebaseDatabase
 ) : NewsDataSource.Firebase {
 
     override suspend fun saveNews(news: NewsDomainModel): String {
         var result = ""
 
-        databaseReference().push().setValue(news)
-            .addOnSuccessListener {
+        databaseReference()?.push()?.setValue(news)
+            ?.addOnSuccessListener {
                 result = "News add to bookmark"
             }
-            .addOnFailureListener {
+            ?.addOnFailureListener {
                 result = "Failure: ${it.message}"
             }
 
@@ -27,13 +27,13 @@ class FirebaseDataSourceImpl(
     }
 
     override suspend fun deleteNews(id: String) {
-        databaseReference().child(id).removeValue()
+        databaseReference()?.child(id)?.removeValue()
     }
 
     override suspend fun getListNews(): List<BookmarksModel> {
         val listNews = mutableListOf<BookmarksModel>()
 
-        databaseReference().get().addOnSuccessListener { dataSnapshot ->
+        databaseReference()?.get()?.addOnSuccessListener { dataSnapshot ->
             for(postSnapshot in dataSnapshot.children) {
                 listNews.add(
                     BookmarksModel(
@@ -46,26 +46,27 @@ class FirebaseDataSourceImpl(
                     )
                 )
             }
-        } .addOnFailureListener {
+        } ?.addOnFailureListener {
             listNews.clear()
         }
 
         return listNews
     }
 
-    override suspend fun getUser(): FirebaseUser {
+    override suspend fun getUser(): FirebaseUser? {
         return firebaseUser
     }
 
-    override suspend fun setUser(user: FirebaseUser) {
+    override suspend fun setUser(user: FirebaseUser?) {
         firebaseUser = user
     }
 
-    private fun databaseReference() : DatabaseReference = firebaseUser.uid
-        .let { uid ->
-            firebaseDatabase.reference
-                .child("users")
-                .child(uid)
-                .child("bookmarksNews")
+    private fun databaseReference() : DatabaseReference? = firebaseUser?.let {
+        firebaseDatabase.reference
+        .child("users")
+        .child(it.uid)
+        .child("bookmarksNews")
+    }
+
     }
 }
