@@ -1,9 +1,6 @@
 package com.example.news.di
 
-import com.example.news.domain.usecase.AddNewsToBookmarksUseCase
-import com.example.news.domain.usecase.DeleteNewsFromBookmarksUseCase
-import com.example.news.domain.usecase.GetListBookmarksUseCase
-import com.example.news.domain.usecase.GetNewsListUseCase
+import com.example.news.domain.usecase.*
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -12,5 +9,7 @@ val useCaseModule = module {
         AddNewsToBookmarksUseCase(newsRepository = get())
         DeleteNewsFromBookmarksUseCase(newsRepository = get())
         GetListBookmarksUseCase(newsRepository = get())
+        GetFirebaseUserUseCase(newsRepository = get())
+        SetFirebaseUserUseCase(newsRepository = get())
     }
 }
