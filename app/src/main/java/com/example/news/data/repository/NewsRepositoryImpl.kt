@@ -4,6 +4,7 @@ import com.example.news.data.datasource.NewsDataSource
 import com.example.news.domain.model.NewsDomainModel
 import com.example.news.domain.repository.NewsRepository
 import com.example.news.ui.tabs.bookmarks.BookmarksModel
+import com.google.firebase.auth.FirebaseUser
 
 class NewsRepositoryImpl(
     private val newsRemoteDataSource: NewsDataSource.Remote,
@@ -30,6 +31,14 @@ class NewsRepositoryImpl(
 
     override suspend fun getListBookmarks(): List<BookmarksModel> {
         return firebaseDataSource.getListNews()
+    }
+
+    override suspend fun getFirebaseUser(): FirebaseUser {
+        return firebaseDataSource.getUser()
+    }
+
+    override suspend fun setFirebaseUser(user: FirebaseUser) {
+        firebaseDataSource.setUser(user)
     }
 
     override suspend fun deleteNewsFromBookmarks(id: String) {
