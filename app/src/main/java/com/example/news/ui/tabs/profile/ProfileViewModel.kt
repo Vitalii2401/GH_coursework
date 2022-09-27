@@ -27,7 +27,7 @@ class ProfileViewModel(
         }
     }
 
-    fun setUser(user: FirebaseUser) {
+    fun setUser(user: FirebaseUser?) {
         viewModelScope.launch {
             setFirebaseUserUseCase.execute(user)
             getUser()

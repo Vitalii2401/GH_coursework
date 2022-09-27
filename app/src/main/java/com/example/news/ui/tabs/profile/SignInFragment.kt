@@ -13,6 +13,7 @@ import com.example.news.databinding.FragmentSignInBinding
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -21,6 +22,7 @@ class SignInFragment : Fragment() {
 
     private lateinit var binding: FragmentSignInBinding
     private val profileViewModel by viewModel<ProfileViewModel>()
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     private val signInLauncher =
         registerForActivityResult(FirebaseAuthUIActivityResultContract()) { res ->
@@ -43,6 +45,7 @@ class SignInFragment : Fragment() {
         binding.signInButton.setOnClickListener { showFirebaseUI() }
     }
 
+
     private fun showFirebaseUI() {
         val providers = arrayListOf(
             AuthUI.IdpConfig.GoogleBuilder().build()
@@ -51,7 +54,6 @@ class SignInFragment : Fragment() {
         val signInIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()
             .setAvailableProviders(providers)
-            .setIsSmartLockEnabled(false)
             .build()
 
         signInLauncher.launch(signInIntent)
@@ -59,8 +61,7 @@ class SignInFragment : Fragment() {
 
     private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
         if (result.resultCode == ComponentActivity.RESULT_OK) {
-            Log.d("test", "signInResult: ${Firebase.auth.currentUser}")
-            profileViewModel.setUser(Firebase.auth.currentUser!!)
+            profileViewModel.setUser(Firebase.auth.currentUser)
             checkAuthState()
         }
     }
@@ -70,7 +71,6 @@ class SignInFragment : Fragment() {
             if (firebaseUser != null) {
                 findNavController().navigate(R.id.profileFragment)
             }
-            Log.d("test", "checkAuthState: $firebaseUser")
         }
     }
 }

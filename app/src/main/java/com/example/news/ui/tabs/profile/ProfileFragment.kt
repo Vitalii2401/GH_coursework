@@ -21,6 +21,7 @@ class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
     private val profileViewModel by viewModel<ProfileViewModel>()
+    private var user: FirebaseUser? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,35 +34,34 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getUser()
         updateUi()
         logOut()
     }
 
     private fun updateUi() {
         Glide.with(binding.userImage.context)
-            .load(user()?.photoUrl)
+            .load(user?.photoUrl)
             .circleCrop()
             .into(binding.userImage)
 
-        binding.userName.text = user()?.displayName
-        binding.userMail.text = user()?.email
+        binding.userName.text = user?.displayName
+        binding.userMail.text = user?.email
     }
 
     private fun logOut() {
         binding.signOutButton.setOnClickListener {
             AuthUI.getInstance().signOut(requireContext()).addOnSuccessListener {
-                profileViewModel.setUser(Firebase.auth.currentUser!!)
+                profileViewModel.setUser(Firebase.auth.currentUser)
                 findNavController().navigate(R.id.signInFragment)
             }
         }
     }
 
-    private fun user(): FirebaseUser? {
-        var user: FirebaseUser? = null
+    private fun getUser() {
         profileViewModel.firebaseUser.observe(viewLifecycleOwner) {
             user = it
+            updateUi()
         }
-
-        return user
     }
 }
