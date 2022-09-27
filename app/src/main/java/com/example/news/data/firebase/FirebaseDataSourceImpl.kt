@@ -4,13 +4,15 @@ import com.example.news.data.datasource.NewsDataSource
 import com.example.news.domain.model.NewsDomainModel
 import com.example.news.ui.tabs.bookmarks.BookmarksModel
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
-class FirebaseDataSourceImpl(
-    private var firebaseUser: FirebaseUser?,
-    private val firebaseDatabase: FirebaseDatabase
-) : NewsDataSource.Firebase {
+class FirebaseDataSourceImpl : NewsDataSource.Firebase {
+
+    private var firebaseUser = Firebase.auth.currentUser
+    private val firebaseDatabase = Firebase.database
 
     override suspend fun saveNews(news: NewsDomainModel): String {
         var result = ""

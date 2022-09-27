@@ -13,8 +13,6 @@ import com.example.news.data.objects.RequestParam
 import com.example.news.databinding.FragmentNewsListBinding
 import com.example.news.domain.model.NewsDomainModel
 import com.example.news.ui.tabs.TabsFragmentDirections
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsListFragment : Fragment(),

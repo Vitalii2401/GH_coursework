@@ -16,9 +16,6 @@ val dataSourceModule = module {
     }
 
     single<NewsDataSource.Firebase> {
-        FirebaseDataSourceImpl(
-            firebaseUser = get(),
-            firebaseDatabase = get()
-        )
+        FirebaseDataSourceImpl()
     }
 }

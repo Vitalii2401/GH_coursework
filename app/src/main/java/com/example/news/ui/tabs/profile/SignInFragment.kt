@@ -1,6 +1,7 @@
 package com.example.news.ui.tabs.profile
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -58,6 +59,7 @@ class SignInFragment : Fragment() {
 
     private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
         if (result.resultCode == ComponentActivity.RESULT_OK) {
+            Log.d("test", "signInResult: ${Firebase.auth.currentUser}")
             profileViewModel.setUser(Firebase.auth.currentUser!!)
             checkAuthState()
         }
@@ -68,6 +70,7 @@ class SignInFragment : Fragment() {
             if (firebaseUser != null) {
                 findNavController().navigate(R.id.profileFragment)
             }
+            Log.d("test", "checkAuthState: $firebaseUser")
         }
     }
 }
