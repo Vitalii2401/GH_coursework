@@ -15,20 +15,18 @@ class BookmarksViewModel(
     private val _listBookmarks = MutableLiveData<List<BookmarksModel>>()
     val listBookmarks: LiveData<List<BookmarksModel>> = _listBookmarks
 
-    init {
-        loadBookmarks()
-    }
-
-    private fun loadBookmarks() {
-        viewModelScope.launch {
-            _listBookmarks.value = getListBookmarksUseCase.execute()
-        }
+    fun getBookmarks(): LiveData<List<BookmarksModel>> {
+        return getListBookmarksUseCase.execute()
     }
 
     fun deleteBookmark(id: String) {
         viewModelScope.launch {
             deleteNewsFromBookmarksUseCase.execute(id)
-            loadBookmarks()
+            getBookmarks()
         }
+    }
+
+    fun removeBookmarksListener() {
+        getListBookmarksUseCase.removeBookmarksListener()
     }
 }

@@ -1,6 +1,7 @@
 package com.example.news.ui.tabs.bookmarks
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,6 @@ class BookmarksFragment : Fragment(), BookmarksAdapter.OnItemClickListenerBookma
     private lateinit var binding: FragmentBookmarksBinding
     private val adapterNews = BookmarksAdapter(this)
     private val bookmarksViewModel by viewModel<BookmarksViewModel>()
-    private val news = mutableListOf<BookmarksModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +36,8 @@ class BookmarksFragment : Fragment(), BookmarksAdapter.OnItemClickListenerBookma
     }
 
     private fun showBookmarks() {
-        bookmarksViewModel.listBookmarks.observe(viewLifecycleOwner) {
-            adapterNews.addData(news)
+        bookmarksViewModel.getBookmarks().observe(viewLifecycleOwner) {
+            adapterNews.addData(it)
         }
     }
 
@@ -62,5 +62,10 @@ class BookmarksFragment : Fragment(), BookmarksAdapter.OnItemClickListenerBookma
 
     override fun onItemDelete(bookmarksId: String) {
         bookmarksViewModel.deleteBookmark(bookmarksId)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        bookmarksViewModel.removeBookmarksListener()
     }
 }

@@ -1,5 +1,6 @@
 package com.example.news.data.repository
 
+import androidx.lifecycle.LiveData
 import com.example.news.data.datasource.NewsDataSource
 import com.example.news.domain.model.NewsDomainModel
 import com.example.news.domain.repository.NewsRepository
@@ -12,10 +13,12 @@ class NewsRepositoryImpl(
     private val firebaseDataSource: NewsDataSource.Firebase
 ) : NewsRepository {
 
+    /* Local data source */
     override suspend fun fetchNews(): List<NewsDomainModel> {
         return newsLocalDataSource.fetchNews()
     }
 
+    /* Remote data source */
     override suspend fun loadNews() {
         newsRemoteDataSource.loadNews().let {
             if (it.isNotEmpty()) {
@@ -25,12 +28,17 @@ class NewsRepositoryImpl(
         }
     }
 
+    /* Firebase data source */
     override suspend fun addNewsToBookmarks(news: NewsDomainModel): String {
-        return firebaseDataSource.saveNews(news)
+        return firebaseDataSource.addNewsToBookmarks(news)
     }
 
-    override suspend fun getListBookmarks(): List<BookmarksModel> {
-        return firebaseDataSource.getListNews()
+    override fun removeBookmarksListener() {
+        firebaseDataSource.removeBookmarksListener()
+    }
+
+    override fun getListBookmarks(): LiveData<List<BookmarksModel>> {
+        return firebaseDataSource.getListBookmarks()
     }
 
     override suspend fun getFirebaseUser(): FirebaseUser? {
@@ -42,6 +50,6 @@ class NewsRepositoryImpl(
     }
 
     override suspend fun deleteNewsFromBookmarks(id: String) {
-        firebaseDataSource.deleteNews(id)
+        firebaseDataSource.deleteNewsFromBookmarks(id)
     }
 }

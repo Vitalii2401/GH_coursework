@@ -1,11 +1,17 @@
 package com.example.news.data.firebase
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.news.data.datasource.NewsDataSource
 import com.example.news.domain.model.NewsDomainModel
 import com.example.news.ui.tabs.bookmarks.BookmarksModel
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -13,8 +19,10 @@ class FirebaseDataSourceImpl : NewsDataSource.Firebase {
 
     private var firebaseUser = Firebase.auth.currentUser
     private val firebaseDatabase = Firebase.database
+    private val listNews = mutableListOf<BookmarksModel>()
+    private val listBookmarks = MutableLiveData<List<BookmarksModel>>()
 
-    override suspend fun saveNews(news: NewsDomainModel): String {
+    override suspend fun addNewsToBookmarks(news: NewsDomainModel): String {
         var result = ""
 
         databaseReference()?.push()?.setValue(news)
@@ -28,31 +36,17 @@ class FirebaseDataSourceImpl : NewsDataSource.Firebase {
         return result
     }
 
-    override suspend fun deleteNews(id: String) {
+    override suspend fun deleteNewsFromBookmarks(id: String) {
         databaseReference()?.child(id)?.removeValue()
     }
 
-    override suspend fun getListNews(): List<BookmarksModel> {
-        val listNews = mutableListOf<BookmarksModel>()
+    override fun removeBookmarksListener() {
+        databaseReference()?.removeEventListener(bookmarksListener)
+    }
 
-        databaseReference()?.get()?.addOnSuccessListener { dataSnapshot ->
-            for(postSnapshot in dataSnapshot.children) {
-                listNews.add(
-                    BookmarksModel(
-                        id = postSnapshot.key.toString(),
-                        description = postSnapshot.child("description").value.toString(),
-                        publishedAt = postSnapshot.child("publishedAt").value.toString(),
-                        title = postSnapshot.child("title").value.toString(),
-                        url = postSnapshot.child("url").value.toString(),
-                        urlToImage = postSnapshot.child("urlToImage").value.toString(),
-                    )
-                )
-            }
-        } ?.addOnFailureListener {
-            listNews.clear()
-        }
-
-        return listNews
+    override fun getListBookmarks(): LiveData<List<BookmarksModel>> {
+        databaseReference()?.addValueEventListener(bookmarksListener)
+        return listBookmarks
     }
 
     override suspend fun getUser(): FirebaseUser? {
@@ -68,5 +62,28 @@ class FirebaseDataSourceImpl : NewsDataSource.Firebase {
         .child("users")
         .child(it.uid)
         .child("bookmarksNews")
+    }
+
+    private val bookmarksListener = object : ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            listNews.clear()
+            for(postSnapshot in snapshot.children) {
+                listNews.add(
+                    BookmarksModel(
+                        id = postSnapshot.key.toString(),
+                        description = postSnapshot.child("description").value.toString(),
+                        publishedAt = postSnapshot.child("publishedAt").value.toString(),
+                        title = postSnapshot.child("title").value.toString(),
+                        url = postSnapshot.child("url").value.toString(),
+                        urlToImage = postSnapshot.child("urlToImage").value.toString(),
+                    )
+                )
+            }
+            listBookmarks.value = listNews
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            TODO("Not yet implemented")
+        }
     }
 }
