@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="15dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="5dp">
 
     <LinearLayout
@@ -38,12 +41,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <ImageButton
                 android:id="@+id/addBookmarkButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:backgroundTint="@color/color_primary"
                 android:src="@drawable/ic_baseline_bookmark_24" />
 
@@ -51,6 +57,8 @@
                 android:id="@+id/iconShare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:backgroundTint="@color/color_primary"
                 android:src="@drawable/ic_share" />
 
