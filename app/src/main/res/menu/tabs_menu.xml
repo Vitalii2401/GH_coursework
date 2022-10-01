@@ -3,11 +3,11 @@
 
     <item android:id="@+id/bookmarks"
         android:title="Bookmarks"
-        android:icon="@drawable/ic_baseline_bookmark_24"/>
+        android:icon="@drawable/ic_bookmark"/>
 
     <item android:id="@+id/news"
         android:title="Home"
-        android:icon="@drawable/ic_baseline_home_24"/>
+        android:icon="@drawable/ic_home"/>
 
     <item android:id="@+id/profile"
         android:title="Profile"

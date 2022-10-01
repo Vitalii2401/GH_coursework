@@ -4,13 +4,24 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2225" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_account_circle.xml" value="0.316" />
         <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_baseline_bookmark_24.xml" value="0.316" />
         <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.316" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.316" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_basket.xml" value="0.316" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_bookmark.xml" value="0.316" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_business.xml" value="0.316" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_entertainment.xml" value="0.316" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_general.xml" value="0.316" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_health.xml" value="0.316" />
         <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2225" />
         <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2225" />
         <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_launcher_news.xml" value="0.189" />
         <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_launcher_news_background.xml" value="0.189" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_science.xml" value="0.316" />
         <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_share.xml" value="0.316" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_sports.xml" value="0.316" />
+        <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/drawable/ic_technology.xml" value="0.316" />
         <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/layout/bookmarks_list_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Android_Studio_Projects/GH_coursework/app/src/main/res/layout/fragment_news_list.xml" value="0.36666666666666664" />

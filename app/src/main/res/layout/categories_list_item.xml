@@ -11,7 +11,7 @@
         android:layout_height="45dp"
         android:layout_marginHorizontal="25dp"
         android:layout_marginTop="15dp"
-        tools:src="@drawable/ic_general" />
+        tools:src="@drawable/ic_category_general" />
 
     <TextView
         android:id="@+id/nameCategory"
