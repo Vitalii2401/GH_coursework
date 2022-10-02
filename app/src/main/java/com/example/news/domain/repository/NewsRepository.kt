@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseUser
 
 interface NewsRepository {
     suspend fun loadNews()
-    suspend fun fetchNews(): List<NewsDomainModel>
+    suspend fun fetchNewsFromDatabase(): List<NewsDomainModel>
 
     fun getListBookmarks(): LiveData<List<BookmarksModel>>
     fun addNewsToBookmarks(news: NewsDomainModel, resultLiveData: MutableLiveData<String>)

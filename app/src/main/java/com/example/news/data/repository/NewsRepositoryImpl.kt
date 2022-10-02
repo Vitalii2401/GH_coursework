@@ -15,16 +15,16 @@ class NewsRepositoryImpl(
 ) : NewsRepository {
 
     /* Local data source */
-    override suspend fun fetchNews(): List<NewsDomainModel> {
-        return newsLocalDataSource.fetchNews()
+    override suspend fun fetchNewsFromDatabase(): List<NewsDomainModel> {
+        return newsLocalDataSource.fetchNewsFromDatabase()
     }
 
     /* Remote data source */
     override suspend fun loadNews() {
         newsRemoteDataSource.loadNews().let {
             if (it.isNotEmpty()) {
-                newsLocalDataSource.deleteNews()
-                newsLocalDataSource.addNews(it)
+                newsLocalDataSource.clearDatabase()
+                newsLocalDataSource.addNewsToDatabase(it)
             }
         }
     }

@@ -9,9 +9,9 @@ import com.google.firebase.auth.FirebaseUser
 interface NewsDataSource {
 
     interface Local {
-        suspend fun fetchNews(): List<NewsDomainModel>
-        suspend fun addNews(news: List<NewsDomainModel>)
-        suspend fun deleteNews()
+        suspend fun fetchNewsFromDatabase(): List<NewsDomainModel>
+        suspend fun addNewsToDatabase(news: List<NewsDomainModel>)
+        suspend fun clearDatabase()
     }
 
     interface Remote {
