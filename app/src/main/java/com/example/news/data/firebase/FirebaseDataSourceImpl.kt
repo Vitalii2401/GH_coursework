@@ -1,7 +1,6 @@
 package com.example.news.data.firebase
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.news.R
@@ -9,7 +8,6 @@ import com.example.news.data.datasource.NewsDataSource
 import com.example.news.domain.model.NewsDomainModel
 import com.example.news.ui.tabs.bookmarks.BookmarksModel
 import com.firebase.ui.auth.AuthUI
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -72,7 +70,6 @@ class FirebaseDataSourceImpl(
 
     override fun logOut() {
         AuthUI.getInstance().signOut(context).addOnSuccessListener {
-            Log.d("test", "logOut: ${Firebase.auth.currentUser}")
             firebaseUser = Firebase.auth.currentUser
             firebaseUserLiveData.value = firebaseUser
         }

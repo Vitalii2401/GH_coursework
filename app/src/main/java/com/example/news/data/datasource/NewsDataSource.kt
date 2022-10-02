@@ -23,7 +23,6 @@ interface NewsDataSource {
         fun deleteNewsFromBookmarks(id: String, resultLiveData: MutableLiveData<String>)
         fun getUser(): MutableLiveData<FirebaseUser?>
         fun setUser(user: FirebaseUser?)
-
         fun getListBookmarks(): LiveData<List<BookmarksModel>>
         fun removeBookmarksListener()
         fun logOut()
