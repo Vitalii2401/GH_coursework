@@ -20,11 +20,12 @@ interface NewsDataSource {
 
     interface Firebase {
         fun addNewsToBookmarks(news: NewsDomainModel, resultLiveData: MutableLiveData<String>)
-        suspend fun deleteNewsFromBookmarks(id: String, resultLiveData: MutableLiveData<String>)
-        suspend fun getUser(): FirebaseUser?
-        suspend fun setUser(user: FirebaseUser?)
+        fun deleteNewsFromBookmarks(id: String, resultLiveData: MutableLiveData<String>)
+        fun getUser(): MutableLiveData<FirebaseUser?>
+        fun setUser(user: FirebaseUser?)
 
         fun getListBookmarks(): LiveData<List<BookmarksModel>>
         fun removeBookmarksListener()
+        fun logOut()
     }
 }

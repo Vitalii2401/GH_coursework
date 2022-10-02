@@ -45,15 +45,19 @@ class NewsRepositoryImpl(
         return firebaseDataSource.getListBookmarks()
     }
 
-    override suspend fun getFirebaseUser(): FirebaseUser? {
+    override fun getFirebaseUser(): MutableLiveData<FirebaseUser?> {
         return firebaseDataSource.getUser()
     }
 
-    override suspend fun setFirebaseUser(user: FirebaseUser?) {
+    override fun setFirebaseUser(user: FirebaseUser?) {
         firebaseDataSource.setUser(user)
     }
 
-    override suspend fun deleteNewsFromBookmarks(
+    override fun logOut() {
+        firebaseDataSource.logOut()
+    }
+
+    override fun deleteNewsFromBookmarks(
         id: String,
         resultLiveData: MutableLiveData<String>
     ) {

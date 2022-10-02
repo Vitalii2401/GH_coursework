@@ -11,9 +11,11 @@ interface NewsRepository {
     suspend fun loadNews()
 
     fun addNewsToBookmarks(news: NewsDomainModel, resultLiveData: MutableLiveData<String>)
-    suspend fun deleteNewsFromBookmarks(id: String, resultLiveData: MutableLiveData<String>)
-    suspend fun getFirebaseUser(): FirebaseUser?
-    suspend fun setFirebaseUser(user: FirebaseUser?)
+    fun deleteNewsFromBookmarks(id: String, resultLiveData: MutableLiveData<String>)
+    fun getFirebaseUser(): MutableLiveData<FirebaseUser?>
+    fun setFirebaseUser(user: FirebaseUser?)
+
+    fun logOut()
 
     fun getListBookmarks(): LiveData<List<BookmarksModel>>
     fun removeBookmarksListener()

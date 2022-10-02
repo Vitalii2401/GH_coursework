@@ -16,7 +16,8 @@ val viewModelModule = module {
     viewModel {
         ProfileViewModel(
             getFirebaseUserUseCase = get(),
-            setFirebaseUserUseCase = get()
+            setFirebaseUserUseCase = get(),
+            firebaseLogOutUseCase = get()
         )
     }
 

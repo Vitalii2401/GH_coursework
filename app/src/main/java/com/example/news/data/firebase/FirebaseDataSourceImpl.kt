@@ -1,12 +1,15 @@
 package com.example.news.data.firebase
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.news.R
 import com.example.news.data.datasource.NewsDataSource
 import com.example.news.domain.model.NewsDomainModel
 import com.example.news.ui.tabs.bookmarks.BookmarksModel
+import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -21,6 +24,7 @@ class FirebaseDataSourceImpl(
 ) : NewsDataSource.Firebase {
 
     private var firebaseUser = Firebase.auth.currentUser
+    private val firebaseUserLiveData = MutableLiveData<FirebaseUser?>(firebaseUser)
     private val firebaseDatabase = Firebase.database
     private val listNews = mutableListOf<BookmarksModel>()
     private val listLiveDataBookmarks = MutableLiveData<List<BookmarksModel>>()
@@ -45,7 +49,7 @@ class FirebaseDataSourceImpl(
         }
     }
 
-    override suspend fun deleteNewsFromBookmarks(
+    override fun deleteNewsFromBookmarks(
         id: String,
         resultLiveData: MutableLiveData<String>
     ) {
@@ -66,6 +70,14 @@ class FirebaseDataSourceImpl(
         databaseReference()?.removeEventListener(bookmarksListener)
     }
 
+    override fun logOut() {
+        AuthUI.getInstance().signOut(context).addOnSuccessListener {
+            Log.d("test", "logOut: ${Firebase.auth.currentUser}")
+            firebaseUser = Firebase.auth.currentUser
+            firebaseUserLiveData.value = firebaseUser
+        }
+    }
+
     override fun getListBookmarks(): LiveData<List<BookmarksModel>> {
         databaseReference()
             ?.addValueEventListener(bookmarksListener)
@@ -76,12 +88,13 @@ class FirebaseDataSourceImpl(
         return listLiveDataBookmarks
     }
 
-    override suspend fun getUser(): FirebaseUser? {
-        return firebaseUser
+    override fun getUser(): MutableLiveData<FirebaseUser?> {
+        return firebaseUserLiveData
     }
 
-    override suspend fun setUser(user: FirebaseUser?) {
+    override fun setUser(user: FirebaseUser?) {
         firebaseUser = user
+        firebaseUserLiveData.value = firebaseUser
     }
 
     private fun databaseReference(): DatabaseReference? = firebaseUser?.let { user ->
