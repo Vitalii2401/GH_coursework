@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ShareCompat
 import androidx.navigation.fragment.NavHostFragment
 import com.example.news.R
@@ -33,11 +34,21 @@ class BookmarksFragment : Fragment(), BookmarksAdapter.OnItemClickListenerBookma
         binding.newsListRecycler.adapter = adapterNews
 
         showBookmarks()
+        showToastWithResult()
     }
 
     private fun showBookmarks() {
         bookmarksViewModel.getBookmarks().observe(viewLifecycleOwner) {
             adapterNews.addData(it)
+        }
+    }
+
+    private fun showToastWithResult() {
+        bookmarksViewModel.result.observe(viewLifecycleOwner) {
+            if(it.isNotEmpty()) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                bookmarksViewModel.clearResult()
+            }
         }
     }
 

@@ -50,7 +50,10 @@ class NewsRepositoryImpl(
         firebaseDataSource.setUser(user)
     }
 
-    override suspend fun deleteNewsFromBookmarks(id: String) {
-        firebaseDataSource.deleteNewsFromBookmarks(id)
+    override suspend fun deleteNewsFromBookmarks(
+        id: String,
+        resultLiveData: MutableLiveData<String>
+    ) {
+        firebaseDataSource.deleteNewsFromBookmarks(id, resultLiveData)
     }
 }

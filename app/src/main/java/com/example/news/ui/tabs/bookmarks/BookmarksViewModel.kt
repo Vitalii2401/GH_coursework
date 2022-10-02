@@ -12,8 +12,8 @@ class BookmarksViewModel(
     private val getListBookmarksUseCase: GetListBookmarksUseCase,
     private val deleteNewsFromBookmarksUseCase: DeleteNewsFromBookmarksUseCase,
 ) : ViewModel() {
-    private val _listBookmarks = MutableLiveData<List<BookmarksModel>>()
-    val listBookmarks: LiveData<List<BookmarksModel>> = _listBookmarks
+    private val _result = MutableLiveData<String>()
+    val result: LiveData<String> = _result
 
     fun getBookmarks(): LiveData<List<BookmarksModel>> {
         return getListBookmarksUseCase.execute()
@@ -21,12 +21,15 @@ class BookmarksViewModel(
 
     fun deleteBookmark(id: String) {
         viewModelScope.launch {
-            deleteNewsFromBookmarksUseCase.execute(id)
-            getBookmarks()
+            deleteNewsFromBookmarksUseCase.execute(id, _result)
         }
     }
 
     fun removeBookmarksListener() {
         getListBookmarksUseCase.removeBookmarksListener()
+    }
+
+    fun clearResult() {
+        _result.value = ""
     }
 }

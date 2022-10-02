@@ -40,8 +40,19 @@ class FirebaseDataSourceImpl(
         }
     }
 
-    override suspend fun deleteNewsFromBookmarks(id: String) {
-        databaseReference()?.child(id)?.removeValue()
+    override suspend fun deleteNewsFromBookmarks(
+        id: String,
+        resultLiveData: MutableLiveData<String>
+    ) {
+        databaseReference()?.let { dbReference ->
+            dbReference.child(id).removeValue()
+                .addOnSuccessListener {
+                    resultLiveData.value = context.getString(R.string.result_success_deleted_from_bookmarks)
+                }
+                .addOnFailureListener {
+                    resultLiveData.value = context.getString(R.string.result_failure_deleted_from_bookmarks)
+                }
+        }
     }
 
     override fun removeBookmarksListener() {
