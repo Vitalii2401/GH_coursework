@@ -1,8 +1,10 @@
 package com.example.news.data.firebase
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.news.R
 import com.example.news.data.datasource.NewsDataSource
 import com.example.news.domain.model.NewsDomainModel
 import com.example.news.ui.tabs.bookmarks.BookmarksModel
@@ -15,7 +17,9 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
-class FirebaseDataSourceImpl() : NewsDataSource.Firebase {
+class FirebaseDataSourceImpl(
+    private val context: Context
+) : NewsDataSource.Firebase {
 
     private var firebaseUser = Firebase.auth.currentUser
     private val firebaseDatabase = Firebase.database
@@ -27,13 +31,13 @@ class FirebaseDataSourceImpl() : NewsDataSource.Firebase {
         databaseReference()?.let {  dbReference ->
             dbReference.push().setValue(news)
                 .addOnSuccessListener {
-                    resultLiveData.value = "\"${news.title}\" \nadd to bookmark"
+                    resultLiveData.value = context.getString(R.string.result_success_added_to_bookmarks, news.title)
                 }
                 .addOnFailureListener {
-                    resultLiveData.value = "Failure: ${it.message}"
+                    resultLiveData.value = context.getString(R.string.result_failure_added_to_bookmarks, it.message)
                 }
         } ?: let {
-            resultLiveData.value = "Please log in"
+            resultLiveData.value = context.getString(R.string.result_log_in)
         }
     }
 

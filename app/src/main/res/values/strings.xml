@@ -15,4 +15,8 @@
 
     <string name="country_ua">ua</string>
     <string name="share_url">Share url</string>
+
+    <string name="result_success_added_to_bookmarks">%s \nadded to bookmarks</string>
+    <string name="result_failure_added_to_bookmarks">Failure %s</string>
+    <string name="result_log_in">Please log in</string>
 </resources>
