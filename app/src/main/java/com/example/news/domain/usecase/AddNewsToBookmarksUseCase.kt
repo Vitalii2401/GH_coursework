@@ -7,7 +7,7 @@ import com.example.news.domain.repository.NewsRepository
 class AddNewsToBookmarksUseCase(
     private val newsRepository: NewsRepository
 ) {
-    fun execute(news: NewsDomainModel, resultLiveData: MutableLiveData<String>){
+    fun execute(news: NewsDomainModel, resultLiveData: MutableLiveData<String>) {
         newsRepository.addNewsToBookmarks(news, resultLiveData)
     }
 }

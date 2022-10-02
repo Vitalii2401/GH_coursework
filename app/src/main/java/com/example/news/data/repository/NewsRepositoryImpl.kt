@@ -30,7 +30,10 @@ class NewsRepositoryImpl(
     }
 
     /* Firebase data source */
-    override fun addNewsToBookmarks(news: NewsDomainModel, resultLiveData: MutableLiveData<String>) {
+    override fun addNewsToBookmarks(
+        news: NewsDomainModel,
+        resultLiveData: MutableLiveData<String>
+    ) {
         firebaseDataSource.addNewsToBookmarks(news, resultLiveData)
     }
 

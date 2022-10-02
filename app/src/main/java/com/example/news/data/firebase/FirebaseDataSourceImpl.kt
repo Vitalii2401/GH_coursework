@@ -25,15 +25,20 @@ class FirebaseDataSourceImpl(
     private val listNews = mutableListOf<BookmarksModel>()
     private val listLiveDataBookmarks = MutableLiveData<List<BookmarksModel>>()
 
-    override fun addNewsToBookmarks(news: NewsDomainModel, resultLiveData: MutableLiveData<String>) {
+    override fun addNewsToBookmarks(
+        news: NewsDomainModel,
+        resultLiveData: MutableLiveData<String>
+    ) {
 
-        databaseReference()?.let {  dbReference ->
+        databaseReference()?.let { dbReference ->
             dbReference.push().setValue(news)
                 .addOnSuccessListener {
-                    resultLiveData.value = context.getString(R.string.result_success_added_to_bookmarks, news.title)
+                    resultLiveData.value =
+                        context.getString(R.string.result_success_added_to_bookmarks, news.title)
                 }
                 .addOnFailureListener {
-                    resultLiveData.value = context.getString(R.string.result_failure_added_to_bookmarks, it.message)
+                    resultLiveData.value =
+                        context.getString(R.string.result_failure_added_to_bookmarks, it.message)
                 }
         } ?: let {
             resultLiveData.value = context.getString(R.string.result_log_in)
@@ -47,10 +52,12 @@ class FirebaseDataSourceImpl(
         databaseReference()?.let { dbReference ->
             dbReference.child(id).removeValue()
                 .addOnSuccessListener {
-                    resultLiveData.value = context.getString(R.string.result_success_deleted_from_bookmarks)
+                    resultLiveData.value =
+                        context.getString(R.string.result_success_deleted_from_bookmarks)
                 }
                 .addOnFailureListener {
-                    resultLiveData.value = context.getString(R.string.result_failure_deleted_from_bookmarks)
+                    resultLiveData.value =
+                        context.getString(R.string.result_failure_deleted_from_bookmarks)
                 }
         }
     }
@@ -77,17 +84,17 @@ class FirebaseDataSourceImpl(
         firebaseUser = user
     }
 
-    private fun databaseReference() : DatabaseReference? = firebaseUser?.let { user ->
+    private fun databaseReference(): DatabaseReference? = firebaseUser?.let { user ->
         firebaseDatabase.reference
-        .child("users")
-        .child(user.uid)
-        .child("bookmarksNews")
+            .child("users")
+            .child(user.uid)
+            .child("bookmarksNews")
     }
 
     private val bookmarksListener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
             listNews.clear()
-            for(postSnapshot in snapshot.children) {
+            for (postSnapshot in snapshot.children) {
                 listNews.add(
                     BookmarksModel(
                         id = postSnapshot.key.toString(),

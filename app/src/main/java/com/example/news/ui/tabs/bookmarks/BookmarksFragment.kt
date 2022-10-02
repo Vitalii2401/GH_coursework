@@ -1,7 +1,6 @@
 package com.example.news.ui.tabs.bookmarks
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -45,7 +44,7 @@ class BookmarksFragment : Fragment(), BookmarksAdapter.OnItemClickListenerBookma
 
     private fun showToastWithResult() {
         bookmarksViewModel.result.observe(viewLifecycleOwner) {
-            if(it.isNotEmpty()) {
+            if (it.isNotEmpty()) {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 bookmarksViewModel.clearResult()
             }

@@ -1,7 +1,6 @@
 package com.example.news.ui.tabs.news_list
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -64,8 +63,7 @@ class NewsListFragment : Fragment(),
 
     private fun showToastWithResult() {
         newsViewModel.result.observe(viewLifecycleOwner) {
-            Log.d("test", "showToastWithResult: $it")
-            if(it.isNotEmpty()) {
+            if (it.isNotEmpty()) {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 newsViewModel.clearResult()
             }
@@ -76,7 +74,11 @@ class NewsListFragment : Fragment(),
         val topLevelHost = requireActivity().supportFragmentManager
             .findFragmentById(R.id.fragmentContainer) as NavHostFragment
 
-       topLevelHost.navController.navigate(TabsFragmentDirections.actionTabsFragmentToNewsDetailFragment(url))
+        topLevelHost.navController.navigate(
+            TabsFragmentDirections.actionTabsFragmentToNewsDetailFragment(
+                url
+            )
+        )
     }
 
     override fun onImageShareClick(url: String) {

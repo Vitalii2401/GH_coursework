@@ -12,6 +12,7 @@ class BookmarksViewModel(
     private val getListBookmarksUseCase: GetListBookmarksUseCase,
     private val deleteNewsFromBookmarksUseCase: DeleteNewsFromBookmarksUseCase,
 ) : ViewModel() {
+
     private val _result = MutableLiveData<String>()
     val result: LiveData<String> = _result
 

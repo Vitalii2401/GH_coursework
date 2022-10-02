@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.news.R
 import com.example.news.databinding.BookmarksListItemBinding
-import com.example.news.domain.model.NewsDomainModel
 
 class BookmarksAdapter(
     private val listener: OnItemClickListenerBookmarks
@@ -17,7 +16,8 @@ class BookmarksAdapter(
     private var newsList = listOf<BookmarksModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarksViewHolder {
-        binding = BookmarksListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding =
+            BookmarksListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BookmarksViewHolder(binding)
     }
 
@@ -41,16 +41,16 @@ class BookmarksAdapter(
 
     override fun getItemCount(): Int = newsList.size
 
-    fun addData(list: List<BookmarksModel>){
+    fun addData(list: List<BookmarksModel>) {
         newsList = list
         notifyDataSetChanged()
     }
 
 
-    class BookmarksViewHolder(private val binding: BookmarksListItemBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+    class BookmarksViewHolder(private val binding: BookmarksListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(current: BookmarksModel){
+        fun bind(current: BookmarksModel) {
             binding.newsTitle.text = current.title
 
             Glide.with(binding.newsImage.context)
