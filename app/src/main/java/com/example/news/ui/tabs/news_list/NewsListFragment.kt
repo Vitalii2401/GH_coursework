@@ -1,6 +1,7 @@
 package com.example.news.ui.tabs.news_list
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +46,7 @@ class NewsListFragment : Fragment(),
     }
 
     private fun showNews() {
+
         binding.swipeRefreshLayout.setOnRefreshListener {
             newsViewModel.loadNews()
         }
@@ -54,15 +56,18 @@ class NewsListFragment : Fragment(),
         }
 
         newsViewModel.newsList.observe(viewLifecycleOwner) {
-            binding.swipeRefreshLayout.isRefreshing = false
+            binding.swipeRefreshLayout.isRefreshing = it.isEmpty()
+
             adapterNews.addData(it)
         }
     }
 
     private fun showToastWithResult() {
         newsViewModel.result.observe(viewLifecycleOwner) {
+            Log.d("test", "showToastWithResult: $it")
             if(it.isNotEmpty()) {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                newsViewModel.clearResult()
             }
         }
     }

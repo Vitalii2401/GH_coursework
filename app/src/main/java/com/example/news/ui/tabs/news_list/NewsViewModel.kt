@@ -36,8 +36,10 @@ class NewsViewModel(
     }
 
     fun addToBookmarks(news: NewsDomainModel) {
-        viewModelScope.launch {
-            _result.value = addNewsToBookmarksUseCase.execute(news)
-        }
+        addNewsToBookmarksUseCase.execute(news, _result)
+    }
+
+    fun clearResult() {
+        _result.value = ""
     }
 }

@@ -15,25 +15,26 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
-class FirebaseDataSourceImpl : NewsDataSource.Firebase {
+class FirebaseDataSourceImpl() : NewsDataSource.Firebase {
 
     private var firebaseUser = Firebase.auth.currentUser
     private val firebaseDatabase = Firebase.database
     private val listNews = mutableListOf<BookmarksModel>()
     private val listBookmarks = MutableLiveData<List<BookmarksModel>>()
 
-    override suspend fun addNewsToBookmarks(news: NewsDomainModel): String {
-        var result = ""
+    override fun addNewsToBookmarks(news: NewsDomainModel, resultLiveData: MutableLiveData<String>) {
 
-        databaseReference()?.push()?.setValue(news)
-            ?.addOnSuccessListener {
-                result = "News add to bookmark"
-            }
-            ?.addOnFailureListener {
-                result = "Failure: ${it.message}"
-            }
-
-        return result
+        databaseReference()?.let {  dbReference ->
+            dbReference.push().setValue(news)
+                .addOnSuccessListener {
+                    resultLiveData.value = "\"${news.title}\" \nadd to bookmark"
+                }
+                .addOnFailureListener {
+                    resultLiveData.value = "Failure: ${it.message}"
+                }
+        } ?: let {
+            resultLiveData.value = "Please log in"
+        }
     }
 
     override suspend fun deleteNewsFromBookmarks(id: String) {
@@ -57,10 +58,10 @@ class FirebaseDataSourceImpl : NewsDataSource.Firebase {
         firebaseUser = user
     }
 
-    private fun databaseReference() : DatabaseReference? = firebaseUser?.let {
+    private fun databaseReference() : DatabaseReference? = firebaseUser?.let { user ->
         firebaseDatabase.reference
         .child("users")
-        .child(it.uid)
+        .child(user.uid)
         .child("bookmarksNews")
     }
 

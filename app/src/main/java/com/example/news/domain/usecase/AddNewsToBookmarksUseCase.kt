@@ -1,12 +1,13 @@
 package com.example.news.domain.usecase
 
+import androidx.lifecycle.MutableLiveData
 import com.example.news.domain.model.NewsDomainModel
 import com.example.news.domain.repository.NewsRepository
 
 class AddNewsToBookmarksUseCase(
     private val newsRepository: NewsRepository
 ) {
-    suspend fun execute(news: NewsDomainModel): String {
-        return newsRepository.addNewsToBookmarks(news)
+    fun execute(news: NewsDomainModel, resultLiveData: MutableLiveData<String>){
+        newsRepository.addNewsToBookmarks(news, resultLiveData)
     }
 }

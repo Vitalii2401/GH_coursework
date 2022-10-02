@@ -1,6 +1,7 @@
 package com.example.news.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.news.data.datasource.NewsDataSource
 import com.example.news.domain.model.NewsDomainModel
 import com.example.news.domain.repository.NewsRepository
@@ -29,8 +30,8 @@ class NewsRepositoryImpl(
     }
 
     /* Firebase data source */
-    override suspend fun addNewsToBookmarks(news: NewsDomainModel): String {
-        return firebaseDataSource.addNewsToBookmarks(news)
+    override fun addNewsToBookmarks(news: NewsDomainModel, resultLiveData: MutableLiveData<String>) {
+        firebaseDataSource.addNewsToBookmarks(news, resultLiveData)
     }
 
     override fun removeBookmarksListener() {
