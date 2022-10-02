@@ -30,6 +30,10 @@ class NewsRepositoryImpl(
     }
 
     /* Firebase data source */
+    override fun getListBookmarks(): LiveData<List<BookmarksModel>> {
+        return firebaseDataSource.getListBookmarks()
+    }
+
     override fun addNewsToBookmarks(
         news: NewsDomainModel,
         resultLiveData: MutableLiveData<String>
@@ -37,30 +41,26 @@ class NewsRepositoryImpl(
         firebaseDataSource.addNewsToBookmarks(news, resultLiveData)
     }
 
-    override fun removeBookmarksListener() {
-        firebaseDataSource.removeBookmarksListener()
-    }
-
-    override fun getListBookmarks(): LiveData<List<BookmarksModel>> {
-        return firebaseDataSource.getListBookmarks()
-    }
-
-    override fun getFirebaseUser(): MutableLiveData<FirebaseUser?> {
-        return firebaseDataSource.getUser()
+    override fun deleteNewsFromBookmarks(
+        id: String,
+        resultLiveData: MutableLiveData<String>
+    ) {
+        firebaseDataSource.deleteNewsFromBookmarks(id, resultLiveData)
     }
 
     override fun setFirebaseUser(user: FirebaseUser?) {
         firebaseDataSource.setUser(user)
     }
 
+    override fun getFirebaseUser(): MutableLiveData<FirebaseUser?> {
+        return firebaseDataSource.getUser()
+    }
+
     override fun logOut() {
         firebaseDataSource.logOut()
     }
 
-    override fun deleteNewsFromBookmarks(
-        id: String,
-        resultLiveData: MutableLiveData<String>
-    ) {
-        firebaseDataSource.deleteNewsFromBookmarks(id, resultLiveData)
+    override fun removeBookmarksListener() {
+        firebaseDataSource.removeBookmarksListener()
     }
 }

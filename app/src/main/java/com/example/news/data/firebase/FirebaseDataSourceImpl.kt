@@ -21,11 +21,23 @@ class FirebaseDataSourceImpl(
     private val context: Context
 ) : NewsDataSource.Firebase {
 
-    private var firebaseUser = Firebase.auth.currentUser
-    private val firebaseUserLiveData = MutableLiveData<FirebaseUser?>(firebaseUser)
     private val firebaseDatabase = Firebase.database
-    private val listNews = mutableListOf<BookmarksModel>()
-    private val listLiveDataBookmarks = MutableLiveData<List<BookmarksModel>>()
+    private var firebaseUser = Firebase.auth.currentUser
+
+    private val listBookmarks = mutableListOf<BookmarksModel>()
+    private val listBookmarksLiveData = MutableLiveData<List<BookmarksModel>>()
+    private val firebaseUserLiveData = MutableLiveData<FirebaseUser?>(firebaseUser)
+
+    /* Bookmarks */
+    override fun getListBookmarks(): LiveData<List<BookmarksModel>> {
+        databaseReference()
+            ?.addValueEventListener(bookmarksListener)
+            ?: let {
+                listBookmarks.clear()
+                listBookmarksLiveData.value = listBookmarks
+            }
+        return listBookmarksLiveData
+    }
 
     override fun addNewsToBookmarks(
         news: NewsDomainModel,
@@ -68,6 +80,16 @@ class FirebaseDataSourceImpl(
         databaseReference()?.removeEventListener(bookmarksListener)
     }
 
+    /* Account */
+    override fun setUser(user: FirebaseUser?) {
+        firebaseUser = user
+        firebaseUserLiveData.value = firebaseUser
+    }
+
+    override fun getUser(): MutableLiveData<FirebaseUser?> {
+        return firebaseUserLiveData
+    }
+
     override fun logOut() {
         AuthUI.getInstance().signOut(context).addOnSuccessListener {
             firebaseUser = Firebase.auth.currentUser
@@ -75,25 +97,7 @@ class FirebaseDataSourceImpl(
         }
     }
 
-    override fun getListBookmarks(): LiveData<List<BookmarksModel>> {
-        databaseReference()
-            ?.addValueEventListener(bookmarksListener)
-            ?: let {
-                listNews.clear()
-                listLiveDataBookmarks.value = listNews
-            }
-        return listLiveDataBookmarks
-    }
-
-    override fun getUser(): MutableLiveData<FirebaseUser?> {
-        return firebaseUserLiveData
-    }
-
-    override fun setUser(user: FirebaseUser?) {
-        firebaseUser = user
-        firebaseUserLiveData.value = firebaseUser
-    }
-
+    /* Database */
     private fun databaseReference(): DatabaseReference? = firebaseUser?.let { user ->
         firebaseDatabase.reference
             .child("users")
@@ -101,11 +105,12 @@ class FirebaseDataSourceImpl(
             .child("bookmarksNews")
     }
 
+    /* Bookmarks listener */
     private val bookmarksListener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
-            listNews.clear()
+            listBookmarks.clear()
             for (postSnapshot in snapshot.children) {
-                listNews.add(
+                listBookmarks.add(
                     BookmarksModel(
                         id = postSnapshot.key.toString(),
                         description = postSnapshot.child("description").value.toString(),
@@ -116,12 +121,12 @@ class FirebaseDataSourceImpl(
                     )
                 )
             }
-            listLiveDataBookmarks.value = listNews
+            listBookmarksLiveData.value = listBookmarks
         }
 
         override fun onCancelled(error: DatabaseError) {
-            listNews.clear()
-            listLiveDataBookmarks.value = listNews
+            listBookmarks.clear()
+            listBookmarksLiveData.value = listBookmarks
         }
     }
 }
