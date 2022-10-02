@@ -1,7 +1,6 @@
 package com.example.news.data.firebase
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.news.R
@@ -24,7 +23,7 @@ class FirebaseDataSourceImpl(
     private var firebaseUser = Firebase.auth.currentUser
     private val firebaseDatabase = Firebase.database
     private val listNews = mutableListOf<BookmarksModel>()
-    private val listBookmarks = MutableLiveData<List<BookmarksModel>>()
+    private val listLiveDataBookmarks = MutableLiveData<List<BookmarksModel>>()
 
     override fun addNewsToBookmarks(news: NewsDomainModel, resultLiveData: MutableLiveData<String>) {
 
@@ -50,8 +49,13 @@ class FirebaseDataSourceImpl(
     }
 
     override fun getListBookmarks(): LiveData<List<BookmarksModel>> {
-        databaseReference()?.addValueEventListener(bookmarksListener)
-        return listBookmarks
+        databaseReference()
+            ?.addValueEventListener(bookmarksListener)
+            ?: let {
+                listNews.clear()
+                listLiveDataBookmarks.value = listNews
+            }
+        return listLiveDataBookmarks
     }
 
     override suspend fun getUser(): FirebaseUser? {
@@ -84,11 +88,12 @@ class FirebaseDataSourceImpl(
                     )
                 )
             }
-            listBookmarks.value = listNews
+            listLiveDataBookmarks.value = listNews
         }
 
         override fun onCancelled(error: DatabaseError) {
-            TODO("Not yet implemented")
+            listNews.clear()
+            listLiveDataBookmarks.value = listNews
         }
     }
 }
