@@ -5,12 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news.domain.usecase.DeleteNewsFromBookmarksUseCase
+import com.example.news.domain.usecase.FirebaseGetCountBookmarksUseCase
 import com.example.news.domain.usecase.GetListBookmarksUseCase
 import kotlinx.coroutines.launch
 
 class BookmarksViewModel(
     private val getListBookmarksUseCase: GetListBookmarksUseCase,
     private val deleteNewsFromBookmarksUseCase: DeleteNewsFromBookmarksUseCase,
+    private val firebaseGetCountBookmarksUseCase: FirebaseGetCountBookmarksUseCase
 ) : ViewModel() {
 
     private val _result = MutableLiveData<String>()
@@ -18,6 +20,10 @@ class BookmarksViewModel(
 
     fun getBookmarks(): LiveData<List<BookmarksModel>> {
         return getListBookmarksUseCase.execute()
+    }
+
+    fun getCountBookmarks(): LiveData<Long> {
+        return firebaseGetCountBookmarksUseCase.execute()
     }
 
     fun deleteBookmark(id: String) {

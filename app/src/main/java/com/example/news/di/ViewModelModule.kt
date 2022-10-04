@@ -24,7 +24,8 @@ val viewModelModule = module {
     viewModel {
         BookmarksViewModel(
             getListBookmarksUseCase = get(),
-            deleteNewsFromBookmarksUseCase = get()
+            deleteNewsFromBookmarksUseCase = get(),
+            firebaseGetCountBookmarksUseCase = get()
         )
     }
 }

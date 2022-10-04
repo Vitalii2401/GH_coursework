@@ -11,4 +11,5 @@ val useCaseModule = module {
     factory { GetFirebaseUserUseCase(newsRepository = get()) }
     factory { SetFirebaseUserUseCase(newsRepository = get()) }
     factory { FirebaseLogOutUseCase(newsRepository = get()) }
+    factory { FirebaseGetCountBookmarksUseCase(newsRepository = get()) }
 }

@@ -34,6 +34,10 @@ class NewsRepositoryImpl(
         return firebaseDataSource.getListBookmarks()
     }
 
+    override fun getCountBookmarks(): LiveData<Long> {
+        return firebaseDataSource.getCountBookmarks()
+    }
+
     override fun addNewsToBookmarks(
         news: NewsDomainModel,
         resultLiveData: MutableLiveData<String>

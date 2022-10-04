@@ -11,6 +11,7 @@ interface NewsRepository {
     suspend fun fetchNewsFromDatabase(): List<NewsDomainModel>
 
     fun getListBookmarks(): LiveData<List<BookmarksModel>>
+    fun getCountBookmarks(): LiveData<Long>
     fun addNewsToBookmarks(news: NewsDomainModel, resultLiveData: MutableLiveData<String>)
     fun deleteNewsFromBookmarks(id: String, resultLiveData: MutableLiveData<String>)
 

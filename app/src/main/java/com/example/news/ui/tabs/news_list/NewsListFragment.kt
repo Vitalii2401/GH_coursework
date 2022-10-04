@@ -1,6 +1,7 @@
 package com.example.news.ui.tabs.news_list
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ShareCompat
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.news.R
 import com.example.news.data.objects.RequestParam
 import com.example.news.databinding.FragmentNewsListBinding
@@ -45,6 +47,10 @@ class NewsListFragment : Fragment(),
     }
 
     private fun showNews() {
+        newsViewModel.newsList.observe(viewLifecycleOwner) {
+            binding.swipeRefreshLayout.isRefreshing = it.isEmpty()
+            adapterNews.addData(it)
+        }
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             newsViewModel.loadNews()
@@ -52,12 +58,6 @@ class NewsListFragment : Fragment(),
 
         newsViewModel.categoriesList.observe(viewLifecycleOwner) {
             adapterCategories.addData(it)
-        }
-
-        newsViewModel.newsList.observe(viewLifecycleOwner) {
-            binding.swipeRefreshLayout.isRefreshing = it.isEmpty()
-
-            adapterNews.addData(it)
         }
     }
 

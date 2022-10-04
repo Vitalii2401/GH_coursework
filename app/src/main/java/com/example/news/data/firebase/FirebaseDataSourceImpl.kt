@@ -1,6 +1,7 @@
 package com.example.news.data.firebase
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.news.R
@@ -25,6 +26,7 @@ class FirebaseDataSourceImpl(
     private var firebaseUser = Firebase.auth.currentUser
 
     private val listBookmarks = mutableListOf<BookmarksModel>()
+    private val countBookmarksLiveData = MutableLiveData<Long>()
     private val listBookmarksLiveData = MutableLiveData<List<BookmarksModel>>()
     private val firebaseUserLiveData = MutableLiveData<FirebaseUser?>(firebaseUser)
 
@@ -37,6 +39,10 @@ class FirebaseDataSourceImpl(
                 listBookmarksLiveData.value = listBookmarks
             }
         return listBookmarksLiveData
+    }
+
+    override fun getCountBookmarks(): LiveData<Long> {
+        return countBookmarksLiveData
     }
 
     override fun addNewsToBookmarks(
@@ -108,6 +114,8 @@ class FirebaseDataSourceImpl(
     /* Bookmarks listener */
     private val bookmarksListener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
+            countBookmarksLiveData.value = snapshot.childrenCount
+            Log.d("test", "onDataChange: count -> ${snapshot.childrenCount}\nliveData -> ${countBookmarksLiveData.value}")
             listBookmarks.clear()
             for (postSnapshot in snapshot.children) {
                 listBookmarks.add(
@@ -125,6 +133,7 @@ class FirebaseDataSourceImpl(
         }
 
         override fun onCancelled(error: DatabaseError) {
+            Log.d("test", "onCancelled: this ${error.message}")
             listBookmarks.clear()
             listBookmarksLiveData.value = listBookmarks
         }
