@@ -26,4 +26,5 @@
 
     <!-- Bookmarks -->
     <string name="bookmarks_empty">Your bookmarks list is empty.\nBookmark the news to display it here :)</string>
+    <string name="bookmarks_log_in">Please log in to receive a list of bookmarks</string>
 </resources>

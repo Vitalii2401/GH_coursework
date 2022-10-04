@@ -48,10 +48,18 @@ class BookmarksFragment : Fragment(), BookmarksAdapter.OnItemClickListenerBookma
         }
 
         bookmarksViewModel.getCountBookmarks().observe(viewLifecycleOwner) {
-            with(binding) {
-                if (it == 0L) {
-                    bookmarksErrorTextView.visibility = View.VISIBLE
-                    bookmarksProgressBar.visibility = View.GONE
+            if (it == 0L) {
+                binding.bookmarksErrorTextView.visibility = View.VISIBLE
+                binding.bookmarksProgressBar.visibility = View.GONE
+            }
+        }
+
+        bookmarksViewModel.getUser().observe(viewLifecycleOwner) {
+            if (it == null) {
+                binding.bookmarksProgressBar.visibility = View.GONE
+                binding.bookmarksErrorTextView.let {
+                    it.visibility = View.VISIBLE
+                    it.text = getString(R.string.bookmarks_log_in)
                 }
             }
         }
