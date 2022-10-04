@@ -7,7 +7,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.news.R
 import com.example.news.databinding.ActivityMainBinding
-import com.example.news.ui.tabs.news_list.NewsListFragment
 
 class MainActivity : AppCompatActivity() {
 

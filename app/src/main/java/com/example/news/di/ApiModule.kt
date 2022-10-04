@@ -24,5 +24,5 @@ val apiModule = module {
             .build()
     }
 
-    single { get<Retrofit>().create(NewsApi::class.java)}
+    single { get<Retrofit>().create(NewsApi::class.java) }
 }

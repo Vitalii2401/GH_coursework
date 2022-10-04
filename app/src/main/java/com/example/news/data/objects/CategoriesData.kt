@@ -7,31 +7,31 @@ import com.example.news.data.objects.model.NewsCategory
 object CategoriesData {
     val categoriesList = listOf<NewsCategory>(
         NewsCategory(
-            icon = R.drawable.ic_general,
+            icon = R.drawable.ic_category_general,
             name = NewsApp.resourses.getString(R.string.general)
         ),
         NewsCategory(
-            icon = R.drawable.ic_business,
+            icon = R.drawable.ic_category_business,
             name = NewsApp.resourses.getString(R.string.business)
         ),
         NewsCategory(
-            icon = R.drawable.ic_entertainment,
+            icon = R.drawable.ic_category_entertainment,
             name = NewsApp.resourses.getString(R.string.entertainment)
         ),
         NewsCategory(
-            icon = R.drawable.ic_health,
+            icon = R.drawable.ic_category_health,
             name = NewsApp.resourses.getString(R.string.health)
         ),
         NewsCategory(
-            icon = R.drawable.ic_science,
+            icon = R.drawable.ic_category_science,
             name = NewsApp.resourses.getString(R.string.science)
         ),
         NewsCategory(
-            icon = R.drawable.ic_sports,
+            icon = R.drawable.ic_category_sports,
             name = NewsApp.resourses.getString(R.string.sports)
         ),
         NewsCategory(
-            icon = R.drawable.ic_technology,
+            icon = R.drawable.ic_category_technology,
             name = NewsApp.resourses.getString(R.string.technology)
         )
     )

@@ -48,7 +48,7 @@ class NewsDetailFragment : Fragment() {
         }
     }
 
-    companion object {
+    /*companion object {
         @JvmStatic
         fun newInstance(url: String) =
             NewsDetailFragment().apply {
@@ -56,5 +56,5 @@ class NewsDetailFragment : Fragment() {
                     putString(URL, url)
                 }
             }
-    }
+    }*/
 }

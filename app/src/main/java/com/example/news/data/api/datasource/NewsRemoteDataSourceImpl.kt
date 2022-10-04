@@ -14,7 +14,7 @@ class NewsRemoteDataSourceImpl(
 ) : NewsDataSource.Remote {
     override suspend fun loadNews(): List<NewsDomainModel> {
         return newsApi.getNews(RequestParam.COUNTRY, RequestParam.CATEGORY).let {
-            if(it.isSuccessful)
+            if (it.isSuccessful)
                 it.body()?.articles?.map(::mapNewsToDomain) ?: emptyList()
             else {
                 Toast.makeText(context, "Error ${it.code()}", Toast.LENGTH_SHORT).show()

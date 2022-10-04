@@ -9,15 +9,15 @@ import com.example.news.domain.model.NewsDomainModel
 class NewsLocalDataSourceImpl(
     private val newsDao: NewsDao
 ) : NewsDataSource.Local {
-    override suspend fun fetchNews(): List<NewsDomainModel> {
+    override suspend fun fetchNewsFromDatabase(): List<NewsDomainModel> {
         return newsDao.fetchNews().map(::mapEntityToNewsDomainModel)
     }
 
-    override suspend fun addNews(news: List<NewsDomainModel>) {
+    override suspend fun addNewsToDatabase(news: List<NewsDomainModel>) {
         newsDao.addNews(news.map(::mapNewsDomainModelToEntity))
     }
 
-    override suspend fun deleteNews() {
-        newsDao.deleteNews()
+    override suspend fun clearDatabase() {
+        newsDao.clearDatabase()
     }
 }

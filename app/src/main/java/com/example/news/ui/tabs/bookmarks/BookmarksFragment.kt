@@ -1,35 +1,30 @@
 package com.example.news.ui.tabs.bookmarks
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ShareCompat
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import com.example.news.R
 import com.example.news.databinding.FragmentBookmarksBinding
-import com.example.news.domain.model.NewsDomainModel
 import com.example.news.ui.tabs.TabsFragmentDirections
-import com.example.news.ui.tabs.profile.firebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BookmarksFragment : Fragment(), BookmarksAdapter.OnItemClickListenerBookmarks {
 
     private lateinit var binding: FragmentBookmarksBinding
     private val adapterNews = BookmarksAdapter(this)
-    private val databaseRef = FirebaseDatabase.getInstance().reference
-    private val news = mutableListOf<BookmarksModel>()
+    private val bookmarksViewModel by viewModel<BookmarksViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentBookmarksBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -39,33 +34,44 @@ class BookmarksFragment : Fragment(), BookmarksAdapter.OnItemClickListenerBookma
 
         binding.newsListRecycler.adapter = adapterNews
 
-        getBookmarks()
+        showBookmarks()
+        showToastWithResult()
     }
 
-    private fun getBookmarks() {
-        val bookmarksRef = firebaseUser?.uid?.let {
-            databaseRef.child("users").child(it).child("bookmarksNews")
+    private fun showBookmarks() {
+        bookmarksViewModel.getBookmarks().observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                binding.bookmarksProgressBar.visibility = View.GONE
+                binding.bookmarksErrorTextView.visibility = View.GONE
+            }
+            adapterNews.addData(it)
         }
 
-        bookmarksRef?.get()?.addOnSuccessListener {
-            for (postSnapshot in it.children) {
-                news.add(
-                    BookmarksModel(
-                        id = postSnapshot.key.toString(),
-                        description = postSnapshot.child("description").value.toString(),
-                        publishedAt = postSnapshot.child("publishedAt").value.toString(),
-                        title = postSnapshot.child("title").value.toString(),
-                        url = postSnapshot.child("url").value.toString(),
-                        urlToImage = postSnapshot.child("urlToImage").value.toString(),
-                    )
-                )
+        bookmarksViewModel.getCountBookmarks().observe(viewLifecycleOwner) {
+            if (it == 0L) {
+                binding.bookmarksErrorTextView.visibility = View.VISIBLE
+                binding.bookmarksProgressBar.visibility = View.GONE
             }
-            adapterNews.addData(news)
         }
-            ?.addOnFailureListener {
-                news.clear()
-                adapterNews.addData(news)
+
+        bookmarksViewModel.getUser().observe(viewLifecycleOwner) {
+            if (it == null) {
+                binding.bookmarksProgressBar.visibility = View.GONE
+                binding.bookmarksErrorTextView.let {
+                    it.visibility = View.VISIBLE
+                    it.text = getString(R.string.bookmarks_log_in)
+                }
             }
+        }
+    }
+
+    private fun showToastWithResult() {
+        bookmarksViewModel.result.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                bookmarksViewModel.clearResult()
+            }
+        }
     }
 
     override fun onItemNewsClick(url: String) {
@@ -87,12 +93,12 @@ class BookmarksFragment : Fragment(), BookmarksAdapter.OnItemClickListenerBookma
             .startChooser()
     }
 
-    override fun onItemDelete(bookmarkId: String) {
-        val bookmarksRef = firebaseUser?.uid?.let {
-            databaseRef.child("users").child(it).child("bookmarksNews").child(bookmarkId)
-        }
-        bookmarksRef?.removeValue()?.addOnSuccessListener {
-            Toast.makeText(requireContext(), "News delete", Toast.LENGTH_SHORT).show()
-        }
+    override fun onItemDelete(bookmarksId: String) {
+        bookmarksViewModel.deleteBookmark(bookmarksId)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        bookmarksViewModel.removeBookmarksListener()
     }
 }

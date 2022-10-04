@@ -9,17 +9,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ShareCompat
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.news.R
-import com.example.news.data.objects.CategoriesData
 import com.example.news.data.objects.RequestParam
 import com.example.news.databinding.FragmentNewsListBinding
 import com.example.news.domain.model.NewsDomainModel
-import com.example.news.ui.news_detail.NewsDetailFragment
 import com.example.news.ui.tabs.TabsFragmentDirections
-import com.example.news.ui.tabs.profile.firebaseUser
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsListFragment : Fragment(),
@@ -30,8 +25,6 @@ class NewsListFragment : Fragment(),
     private val adapterNews = NewsAdapter(this)
     private val adapterCategories = NewsCategoriesAdapter(this)
     private val newsViewModel by viewModel<NewsViewModel>()
-
-    private val database = Firebase.database
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -45,6 +38,7 @@ class NewsListFragment : Fragment(),
 
         initRecycler()
         showNews()
+        showToastWithResult()
     }
 
     private fun initRecycler() {
@@ -53,6 +47,11 @@ class NewsListFragment : Fragment(),
     }
 
     private fun showNews() {
+        newsViewModel.newsList.observe(viewLifecycleOwner) {
+            binding.swipeRefreshLayout.isRefreshing = it.isEmpty()
+            adapterNews.addData(it)
+        }
+
         binding.swipeRefreshLayout.setOnRefreshListener {
             newsViewModel.loadNews()
         }
@@ -60,10 +59,14 @@ class NewsListFragment : Fragment(),
         newsViewModel.categoriesList.observe(viewLifecycleOwner) {
             adapterCategories.addData(it)
         }
+    }
 
-        newsViewModel.newsList.observe(viewLifecycleOwner) {
-            binding.swipeRefreshLayout.isRefreshing = false
-            adapterNews.addData(it)
+    private fun showToastWithResult() {
+        newsViewModel.result.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                newsViewModel.clearResult()
+            }
         }
     }
 
@@ -71,7 +74,11 @@ class NewsListFragment : Fragment(),
         val topLevelHost = requireActivity().supportFragmentManager
             .findFragmentById(R.id.fragmentContainer) as NavHostFragment
 
-       topLevelHost.navController.navigate(TabsFragmentDirections.actionTabsFragmentToNewsDetailFragment(url))
+        topLevelHost.navController.navigate(
+            TabsFragmentDirections.actionTabsFragmentToNewsDetailFragment(
+                url
+            )
+        )
     }
 
     override fun onImageShareClick(url: String) {
@@ -83,21 +90,7 @@ class NewsListFragment : Fragment(),
     }
 
     override fun onAddBookmarkClick(news: NewsDomainModel) {
-
-        val myRef = firebaseUser?.uid?.let {
-            database.reference.child("users").child(it).child("bookmarksNews")
-        }
-
-        if (firebaseUser == null)
-            Toast.makeText(requireContext(), "Sign in account", Toast.LENGTH_SHORT).show()
-        else {
-            myRef?.push()?.setValue(news)?.addOnFailureListener {
-                Toast.makeText(requireContext(), "Failure: ${it.message}", Toast.LENGTH_SHORT).show()
-            }
-                ?.addOnSuccessListener {
-                    Toast.makeText(requireContext(), "News add to bookmark", Toast.LENGTH_SHORT).show()
-                }
-        }
+        newsViewModel.addToBookmarks(news)
     }
 
     override fun onItemCategoryClick(category: String) {

@@ -15,4 +15,16 @@
 
     <string name="country_ua">ua</string>
     <string name="share_url">Share url</string>
+
+    <!-- Results -->
+    <string name="result_success_added_to_bookmarks">%s \nAdded to bookmarks</string>
+    <string name="result_failure_added_to_bookmarks">Failure %s</string>
+    <string name="result_log_in">Please log in</string>
+
+    <string name="result_success_deleted_from_bookmarks">Deleted from bookmarks</string>
+    <string name="result_failure_deleted_from_bookmarks">Failure %s</string>
+
+    <!-- Bookmarks -->
+    <string name="bookmarks_empty">Your bookmarks list is empty.\nBookmark the news to display it here :)</string>
+    <string name="bookmarks_log_in">Please log in to receive a list of bookmarks</string>
 </resources>

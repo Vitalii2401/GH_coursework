@@ -15,5 +15,5 @@ abstract class NewsDao {
     abstract suspend fun addNews(news: List<NewsEntity>)
 
     @Query("DELETE FROM news")
-    abstract suspend fun deleteNews()
+    abstract suspend fun clearDatabase()
 }
