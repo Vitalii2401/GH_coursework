@@ -8,7 +8,7 @@ import com.example.news.data.exceptions.ConnectionException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class BaseViewModel : ViewModel() {
+open class BaseViewModel : ViewModel() {
 
     private val _errorConnection = MutableLiveData<String>()
     val errorConnection: LiveData<String> = _errorConnection
