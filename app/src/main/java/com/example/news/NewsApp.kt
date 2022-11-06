@@ -30,7 +30,7 @@ class NewsApp : Application() {
                     repositoryModule,
                     dataSourceModule,
                     dbModule,
-                    apiModule,
+                    apiModule
                 )
             )
         }

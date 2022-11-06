@@ -8,7 +8,8 @@ val repositoryModule = module {
     single<NewsRepository> {
         NewsRepositoryImpl(
             newsRemoteDataSource = get(),
-            newsLocalDataSource = get()
+            newsLocalDataSource = get(),
+            firebaseDataSource = get()
         )
     }
 }
