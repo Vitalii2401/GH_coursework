@@ -10,15 +10,16 @@ import kotlinx.coroutines.launch
 
 open class BaseViewModel : ViewModel() {
 
-    private val _errorConnection = MutableLiveData<String>()
-    val errorConnection: LiveData<String> = _errorConnection
+    private val _errorConnectionState = MutableLiveData(false)
+    val errorConnectionState: LiveData<Boolean> = _errorConnectionState
 
-    fun CoroutineScope.safeLaunch(block: CoroutineScope.() -> Unit) {
+    fun CoroutineScope.safeLaunch(block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch {
             try {
-                block()
+                block.invoke(this)
+                _errorConnectionState.value = false
             } catch (e: ConnectionException) {
-                _errorConnection.value = "No internet connection"
+                _errorConnectionState.value = true
             }
         }
     }

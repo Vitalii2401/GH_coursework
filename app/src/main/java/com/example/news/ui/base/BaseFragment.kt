@@ -12,10 +12,15 @@ abstract class BaseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.errorConnection.observe(viewLifecycleOwner) {
-            showToast(it)
+        viewModel.errorConnectionState.observe(viewLifecycleOwner) { error ->
+            if (error) {
+                showToast("No internet connection")
+                isError()
+            }
         }
     }
+
+    abstract fun isError()
 
     private fun showToast(errorMessage: String) {
         Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_LONG).show()

@@ -7,7 +7,7 @@ import com.example.news.ui.tabs.bookmarks.BookmarksModel
 import com.google.firebase.auth.FirebaseUser
 
 interface NewsRepository {
-    suspend fun loadNews()
+    suspend fun loadNews(): List<NewsDomainModel>
     suspend fun fetchNewsFromDatabase(): List<NewsDomainModel>
 
     fun getListBookmarks(): LiveData<List<BookmarksModel>>

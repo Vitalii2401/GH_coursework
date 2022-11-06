@@ -1,30 +1,28 @@
 package com.example.news.ui.tabs.news_list
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ShareCompat
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.example.news.R
 import com.example.news.data.objects.RequestParam
 import com.example.news.databinding.FragmentNewsListBinding
 import com.example.news.domain.model.NewsDomainModel
+import com.example.news.ui.base.BaseFragment
 import com.example.news.ui.tabs.TabsFragmentDirections
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NewsListFragment : Fragment(),
+class NewsListFragment : BaseFragment(),
     NewsAdapter.OnItemClickListener,
     NewsCategoriesAdapter.OnItemClickListener {
 
     private lateinit var binding: FragmentNewsListBinding
     private val adapterNews = NewsAdapter(this)
     private val adapterCategories = NewsCategoriesAdapter(this)
-    private val newsViewModel by viewModel<NewsViewModel>()
+    override val viewModel by viewModel<NewsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -38,7 +36,12 @@ class NewsListFragment : Fragment(),
 
         initRecycler()
         showNews()
+        update()
         showToastWithResult()
+    }
+
+    override fun isError() {
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 
     private fun initRecycler() {
@@ -47,25 +50,27 @@ class NewsListFragment : Fragment(),
     }
 
     private fun showNews() {
-        newsViewModel.newsList.observe(viewLifecycleOwner) {
-            binding.swipeRefreshLayout.isRefreshing = it.isEmpty()
+        viewModel.newsList.observe(viewLifecycleOwner) {
+            binding.swipeRefreshLayout.isRefreshing = false
             adapterNews.addData(it)
         }
 
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            newsViewModel.loadNews()
-        }
-
-        newsViewModel.categoriesList.observe(viewLifecycleOwner) {
+        viewModel.categoriesList.observe(viewLifecycleOwner) {
             adapterCategories.addData(it)
         }
     }
 
+    private fun update() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.loadNews()
+        }
+    }
+
     private fun showToastWithResult() {
-        newsViewModel.result.observe(viewLifecycleOwner) {
+        viewModel.result.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                newsViewModel.clearResult()
+                viewModel.clearResult()
             }
         }
     }
@@ -90,13 +95,13 @@ class NewsListFragment : Fragment(),
     }
 
     override fun onAddBookmarkClick(news: NewsDomainModel) {
-        newsViewModel.addToBookmarks(news)
+        viewModel.addToBookmarks(news)
     }
 
     override fun onItemCategoryClick(category: String) {
         RequestParam.CATEGORY = category
         binding.swipeRefreshLayout.isRefreshing = true
-        newsViewModel.loadNews()
+        viewModel.loadNews()
         binding.newsRecycler.layoutManager?.scrollToPosition(0)
     }
 }
