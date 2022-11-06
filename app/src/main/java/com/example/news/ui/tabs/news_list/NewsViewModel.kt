@@ -2,19 +2,18 @@ package com.example.news.ui.tabs.news_list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news.data.objects.CategoriesData
 import com.example.news.data.objects.model.NewsCategory
 import com.example.news.domain.model.NewsDomainModel
 import com.example.news.domain.usecase.AddNewsToBookmarksUseCase
-import com.example.news.domain.usecase.GetNewsListUseCase
-import kotlinx.coroutines.launch
+import com.example.news.domain.usecase.LoadNewsListUseCase
+import com.example.news.ui.base.BaseViewModel
 
 class NewsViewModel(
-    private val getNewsListUseCase: GetNewsListUseCase,
+    private val loadNewsListUseCase: LoadNewsListUseCase,
     private val addNewsToBookmarksUseCase: AddNewsToBookmarksUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _newsList = MutableLiveData<List<NewsDomainModel>>()
     private val _categoriesList = MutableLiveData<List<NewsCategory>>()
@@ -30,8 +29,8 @@ class NewsViewModel(
     }
 
     fun loadNews() {
-        viewModelScope.launch {
-            _newsList.value = getNewsListUseCase.execute()
+        viewModelScope.safeLaunch {
+            _newsList.value = loadNewsListUseCase.execute()
         }
     }
 

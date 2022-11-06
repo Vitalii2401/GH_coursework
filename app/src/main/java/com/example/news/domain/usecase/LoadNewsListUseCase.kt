@@ -3,12 +3,10 @@ package com.example.news.domain.usecase
 import com.example.news.domain.model.NewsDomainModel
 import com.example.news.domain.repository.NewsRepository
 
-class GetNewsListUseCase(
+class LoadNewsListUseCase(
     private val newsRepository: NewsRepository
 ) {
-
     suspend fun execute(): List<NewsDomainModel> {
-        newsRepository.loadNews()
-        return newsRepository.fetchNewsFromDatabase()
+        return newsRepository.loadNews()
     }
 }

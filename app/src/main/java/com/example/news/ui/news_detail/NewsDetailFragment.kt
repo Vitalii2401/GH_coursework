@@ -47,14 +47,4 @@ class NewsDetailFragment : Fragment() {
             }
         }
     }
-
-    /*companion object {
-        @JvmStatic
-        fun newInstance(url: String) =
-            NewsDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(URL, url)
-                }
-            }
-    }*/
 }

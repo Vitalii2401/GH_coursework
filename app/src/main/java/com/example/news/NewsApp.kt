@@ -29,7 +29,6 @@ class NewsApp : Application() {
                     useCaseModule,
                     repositoryModule,
                     dataSourceModule,
-                    //firebaseModule,
                     dbModule,
                     apiModule
                 )

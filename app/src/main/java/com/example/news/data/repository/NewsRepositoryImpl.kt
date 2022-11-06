@@ -20,13 +20,15 @@ class NewsRepositoryImpl(
     }
 
     /* Remote data source */
-    override suspend fun loadNews() {
-        newsRemoteDataSource.loadNews().let {
-            if (it.isNotEmpty()) {
+    override suspend fun loadNews(): List<NewsDomainModel> {
+        newsRemoteDataSource.loadNews().let { list ->
+            if (list.isNotEmpty()) {
                 newsLocalDataSource.clearDatabase()
-                newsLocalDataSource.addNewsToDatabase(it)
+                newsLocalDataSource.addNewsToDatabase(list)
             }
         }
+
+        return newsLocalDataSource.fetchNewsFromDatabase()
     }
 
     /* Firebase data source */

@@ -4,7 +4,7 @@ import com.example.news.domain.usecase.*
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    factory { GetNewsListUseCase(newsRepository = get()) }
+    factory { LoadNewsListUseCase(newsRepository = get()) }
     factory { AddNewsToBookmarksUseCase(newsRepository = get()) }
     factory { DeleteNewsFromBookmarksUseCase(newsRepository = get()) }
     factory { GetListBookmarksUseCase(newsRepository = get()) }
