@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "328846552437-gkdr10562dudv022lef3hq6e393346qd.apps.googleusercontent.com",
+          "client_id": "328846552437-gibm2u3tnr0g1kqvo11rihaej5vuddll.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.news",
-            "certificate_hash": "8983239c5dd5b1cdf25e4394303988689149cf29"
+            "certificate_hash": "cb70adc2bd58aca1166d509dc99c93a5e4fa39ee"
           }
         },
         {
